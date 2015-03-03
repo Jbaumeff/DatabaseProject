@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName MyPrivateFiles
+AuthUserFile /user/wegschei/web/cse480/mypwdfile
+
+require valid-user

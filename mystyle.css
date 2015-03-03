@@ -1,0 +1,72 @@
+html, body, header, footer, hgroup, nav, article, section, figure, figcaption, h1, h2, h3, ul, li, body, div, p, img {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
+}
+
+body {
+    background-image: url(img/square_bg_@2X.png);
+}
+
+/* Navigation Bar */
+header div {
+    background-color: rgba(107,202,226,0.4);
+    margin-right: 0px;
+    margin-left: 0px;
+    position: fixed;
+    height: 3em;
+    width: 100%;
+    text-align: center;
+}
+
+header div a {
+    line-height: 3em;   /* Has to match the height of the navbar*/
+    padding: 0em 5em 0em 5em;
+    font-family: "Arial", serif;
+    color: darkslategrey;
+    text-decoration: none;
+}
+
+header div a:visited, header div a:link {
+    color: darkslategrey;
+}
+header div a:hover {
+    color: cadetblue;
+}
+/******************/
+
+/* Login Box */
+div.loginForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -125px;   /* Subtract half of the height */
+    margin-left: -125px;  /* Subtract half of the width */
+    width: 250px;
+    height: 250px;
+    background-color: aquamarine;
+    border-radius: 25px;
+}
+
+div.loginForm form{
+    padding: 2em 2em 2em 2em;
+}
+
+div.loginForm form p {
+    font-family: "Arial", serif;
+    font-size: 1.5em;
+    margin-bottom: .5em;
+}
+
+div.loginForm form input {
+    font-size: .75em;
+    width: 180px;
+
+}
+
+div.loginForm form input.buttonForm {
+    width: 100px;
+}
+/*************/
