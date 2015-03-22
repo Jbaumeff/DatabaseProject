@@ -11,12 +11,11 @@ require 'lib/site.inc.php';
 </head>
 <body>
     <div class="newUserForm">
-        <form>
-            <p>User Name *<input type="text" name="user" id="user"></p>
+        <form method="post" action="./post/new-post.php">
+            <p>User Name *<input type="text" name="userName" id="userName"></p>
             <p>Password *<input type="password" name="password" id="password"></p>
             <p>Full Name *<input type="text" name="fullName" id="fullName"></p>
             <p>Email Address *<input type="text" name="email" id="email"></p>
-            <p>Address *<input type="text" name="address" id="address"></p>
             <p>Birth Year *<input type="text" name="dob" id="dob"></p>
             <p>City and State *<input type="text" name="city" id="city"> <input type="text" name="state" id="state"></p>
             <p>Interests *<input type="text" name="interests"></p>
