@@ -13,7 +13,7 @@
         <p><label for="userNameLabel">Username</label></p>
         <p><input type="text" name="userName" id="userName"></p>
         <p><label for="passwordLabel">Password</label></p>
-        <p><input type="text" name="password" id="password"></p>
+        <p><input type="password" name="password" id="password"></p>
         <p>
             <input class="buttonForm" type="submit" name="login" value="Login">
             <input class="buttonForm" type="submit" name="create" value="New User">
