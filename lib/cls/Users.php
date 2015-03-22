@@ -43,6 +43,40 @@ SQL;
     }
 
     /**
+     * Test for a valid login.
+     * @param $user User id or email
+     * @param $password Password credential
+     * @returns User object if successful, null otherwise.
+     */
+    public function addUser($idUser, $fullName, $emailAddress, $birthYear, $hometownCity, $hometownState,$pword,$privacy) {
+        //Create a new user and add them to the database
+        $sql =<<<SQL
+INSERT INTO $this->tableName (idUser, fullName, emailAddress, birthYear, hometownCity, hometownState, pword, privacy)
+VALUES(?,?,?,?,?,?,?,?)
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+
+        $statement->execute(array($idUser, $fullName, $emailAddress, $birthYear, $hometownCity, $hometownState,$pword,$privacy));
+
+        //Login the newly created User
+        $sql =<<<SQL
+SELECT * from $this->tableName
+where (idUser=? or emailAddress=?) and pword=?
+SQL;
+
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+
+        $statement->execute(array($idUser, $pword));
+        if($statement->rowCount() === 0) {
+            return null;
+        }
+
+        return new User($statement->fetch(PDO::FETCH_ASSOC));
+    }
+
+    /**
      * Get a user based on the id
      * @param $id ID of the user
      * @returns User object if successful, null otherwise.
