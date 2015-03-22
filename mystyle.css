@@ -67,6 +67,7 @@ div.loginForm form input {
 }
 
 div.loginForm form input.buttonForm {
-    width: 100px;
+    width: 89px;
+    display: inline;
 }
 /*************/
