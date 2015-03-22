@@ -52,6 +52,7 @@ header div a:hover {
     border-radius: 25px;
     margin-top: 5%;
 }
+
 div.loginForm {
     margin: 0px auto;
     margin-top: 5em;
@@ -112,3 +113,46 @@ div.newUserForm form input.buttonForm {
     width: 89px;
     display: inline;
 }
+
+
+/********************/
+/* Basic Page Setup */
+/* The main body of the page */
+.main {
+    position:relative;	/* This fixes the IE7 overflow hidden bug */
+    clear:both;
+    float:left;
+    margin-top: 3.5em;
+    width:100%;			/* width of whole page */
+    overflow:hidden;		/* This chops off any overhanging divs */
+}
+
+.left,
+.right {
+    float:left;
+    position:relative;
+    padding: 1em 1em 1em 1em;
+    overflow:hidden;
+    border-radius: 8px;
+
+}
+
+.right {
+    width: 40em;			/* right column content width */
+    background-color: aquamarine;
+}
+
+.left {
+    background-color: darkturquoise;
+    margin-left: .5em;
+    margin-right: 1em;
+    width: 12em;
+}
+
+.left p {
+    margin: 0.5em;
+}
+
+
+/******************/
+/* Profile */

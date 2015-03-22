@@ -12,6 +12,7 @@ class Format {
         $html =<<<HTML
 <header>
     <div>
+        <a href="./">Home</a>
         <a href="profile.php">Profile</a>
         <a href="projects.php">Projects</a>
         <a href="./post/logout-post.php">Logout</a>
