@@ -38,6 +38,22 @@ header div a:hover {
 /******************/
 
 /* Login Box */
+.invalidPassword {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    margin-top: -50px;   /* Subtract half of the height */
+    margin-left: -150px;  /* Subtract half of the width */
+    width: 300px;
+    height: 100px;
+    color: fuchsia;
+    text-align: center;
+    font-family: "Arial", serif;
+    font-size: 1.5em;
+    line-height: 2em;
+    background-color: aquamarine;
+    border-radius: 25px;
+}
 div.loginForm {
     position: absolute;
     top: 50%;

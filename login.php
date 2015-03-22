@@ -1,3 +1,11 @@
+<?php
+    $invalidMessage = '';
+    if(isset($_REQUEST['invalid'])) {
+        $invalidMessage .=<<<HTML
+<div class="invalidPassword"><h3>Invalid Username/Password</h3></div>
+HTML;
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -7,6 +15,10 @@
 </head>
 <body>
 <!-- Header and navigation -->
+
+<?php
+    echo $invalidMessage;
+?>
 
 <div class="loginForm">
     <form method="post" action="./post/login-post.php">
