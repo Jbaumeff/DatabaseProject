@@ -14,8 +14,7 @@ class Format {
     <div>
         <a href="profile.php">Profile</a>
         <a href="projects.php">Projects</a>
-        <a href="index.php">Login</a>
-        <a href="index.php?logOut">Logout</a>
+        <a href="./post/logout-post.php">Logout</a>
     </div>
 </header>
 HTML;
