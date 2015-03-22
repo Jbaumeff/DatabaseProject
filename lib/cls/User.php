@@ -7,74 +7,86 @@
  */
 
 class User {
-    private $id;        ///< ID for this user in the user table
-    private $userid;    ///< User-supplied ID
-    private $name;      ///< What we call you by
-    private $email;     ///< Email address
-    private $joined;    ///< When we joined the site
-    private $role;
+
+    private $idUser;        ///< ID for this user in the user table
+    private $fullName;    ///< User-supplied ID
+    private $emailAddress;      ///< What we call you by
+    private $birthYear;     ///< Email address
+    private $hometownCity;    ///< When we joined the site
+    private $hometownState;
+    private $privacy;
 
     /**
      * Constructor
      * @param $row Row from the user table in the database
      */
     public function __construct($row) {
-        $this->id = $row['id'];
-        $this->userid = $row['userid'];
-        $this->name = $row['name'];
-        $this->email = $row['email'];
-        $this->joined = strtotime($row['joined']);
-        $this->role = $row['role'];
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
+        $this->idUser = $row['idUser'];
+        $this->fullName = $row['fullName'];
+        $this->emailAddress = $row['emailAddress'];
+        $this->birthYear = $row['birthYear'];
+        $this->hometownCity = $row['hometownCity'];
+        $this->hometownState = $row['hometownState'];
+        $this->privacy = $row['privacy'];
     }
 
     /**
      * @return mixed
      */
-    public function getUserid()
+    public function getIdUser()
     {
-        return $this->userid;
+        return $this->idUser;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFullName()
     {
-        return $this->name;
+        return $this->fullName;
     }
 
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getEmailAddress()
     {
-        return $this->email;
+        return $this->emailAddress;
     }
 
     /**
      * @return mixed
      */
-    public function getJoined()
+    public function getBirthYear()
     {
-        return $this->joined;
+        return $this->birthYear;
     }
 
     /**
      * @return mixed
      */
-    public function getRole()
+    public function getHometownCity()
     {
-        return $this->role;
-    }      ///< The user role
+        return $this->hometownCity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHometownState()
+    {
+        return $this->hometownState;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrivacy()
+    {
+        return $this->privacy;
+    }
+
+
 }
 
 ?>

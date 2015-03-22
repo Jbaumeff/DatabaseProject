@@ -14,11 +14,11 @@ return function(Site $site) {
     // Set the time zone
     date_default_timezone_set('America/Detroit');
 
-    $site->setEmail('baumjeff@cse.msu.edu');
-    $site->setRoot('/~baumjeff/step5');
-    $site->dbConfigure('mysql:host=mysql-user.cse.msu.edu;dbname=baumjeff',
-        'baumjeff',       // Database user
-        'A45426038',     // Database password
+    $site->setEmail('wegschei@cse.msu.edu');
+    $site->setRoot('/~wegschei/cse480');
+    $site->dbConfigure('mysql:host=mysql-user.cse.msu.edu;dbname=wegschei',
+        'wegschei',       // Database user
+        'dbase',     // Database password
         '');            // Table prefix
 };
 

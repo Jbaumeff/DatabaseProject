@@ -9,7 +9,7 @@
 <!-- Header and navigation -->
 
 <div class="loginForm">
-    <form method="post" action="/post/login-post.php">
+    <form method="post" action="./post/login-post.php">
         <p><label for="userNameLabel">Username</label></p>
         <p><input type="text" name="userName" id="userName"></p>
         <p><label for="passwordLabel">Password</label></p>

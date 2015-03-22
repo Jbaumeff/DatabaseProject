@@ -31,5 +31,6 @@ if(!isset($login) && $user === null) {
     header("location: $root/login.php");
     exit;
 }
+
 ?>
 

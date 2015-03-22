@@ -1,5 +1,8 @@
 <?php
-    require "lib/Format.php";
+require 'lib/site.inc.php';
+
+$view = new UserView($site, $user, $_REQUEST);
+
 ?>
 
 <!DOCTYPE html>

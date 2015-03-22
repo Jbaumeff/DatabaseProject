@@ -28,7 +28,7 @@ class Users extends Table {
     public function login($user, $password) {
         $sql =<<<SQL
 SELECT * from $this->tableName
-where (userid=? or email=?) and password=?
+where (idUser=? or emailAddress=?) and pword=?
 SQL;
 
         $pdo = $this->pdo();
@@ -50,7 +50,7 @@ SQL;
     public function get($id) {
         $sql =<<<SQL
 SELECT * from $this->tableName
-where id=?
+where idUser=?
 SQL;
 
         $pdo = $this->pdo();
