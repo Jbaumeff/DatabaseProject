@@ -14,12 +14,12 @@ if(isset($_POST['userName']) && isset($_POST['password'])) {
 
     $user = $users->login($_POST['userName'], $_POST['password']);
     if($user !== null) {
-        $_SESSION['userName'] = $user;
+        $_SESSION['user'] = $user;
         header("location: ../");
         exit;
     }
 }
 
-header("location: ../index.php");
+//header("location: ../index.php");
 
 ?>
