@@ -63,11 +63,43 @@ div.loginForm form p {
 div.loginForm form input {
     font-size: .75em;
     width: 180px;
-
 }
 
 div.loginForm form input.buttonForm {
     width: 89px;
     display: inline;
 }
+
 /*************/
+/* New User Page */
+div.newUserForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -125px;   /* Subtract half of the height */
+    margin-left: -125px;  /* Subtract half of the width */
+    width: 250px;
+    height: 47em;
+    background-color: aquamarine;
+    border-radius: 25px;
+}
+
+div.newUserForm form{
+    padding: 2em 2em 2em 2em;
+}
+
+div.newUserForm form p {
+    font-family: "Arial", serif;
+    font-size: 1.5em;
+    margin-bottom: .5em;
+}
+
+div.newUserForm form input {
+    font-size: .75em;
+    width: 180px;
+}
+
+div.newUserForm form input.buttonForm {
+    width: 89px;
+    display: inline;
+}
