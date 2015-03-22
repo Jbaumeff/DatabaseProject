@@ -20,6 +20,6 @@ if(isset($_POST['userName']) && isset($_POST['password'])) {
     }
 }
 
-//header("location: ../index.php");
+header("location: ../index.php");
 
 ?>
