@@ -16,6 +16,9 @@ class Format {
         <a href="profile.php">Profile</a>
         <a href="projects.php">Projects</a>
         <a href="./post/logout-post.php">Logout</a>
+        <form method="post" action="search-results.php">
+            <input type="search" id="search" name="search"><input type="submit" value="Search">
+        </form>
     </div>
 </header>
 HTML;

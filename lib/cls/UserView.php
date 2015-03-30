@@ -13,12 +13,13 @@ class UserView {
      * @param $request The $_REQUEST array
      */
     public function __construct(Site $site, User $user=null, $request) {
-        $users = new Users($site);
+        $this->users = new Users($site);
         $this->sights = new Sights($site);
+        $this->friends = new Friends($site);
 
 
-        if(isset($request['i']) && !is_null($users->get($request['i']))) {
-            $this->user = $users->get($request['i']);
+        if(isset($request['i']) && !is_null($this->users->get($request['i']))) {
+            $this->user = $this->users->get($request['i']);
         } else {
             $this->user = $user;
         }
@@ -48,41 +49,65 @@ class UserView {
     }
 
     /**
-     * @return HTML for all of the sights
+     * @return HTML for all the users friends
      */
-    public function presentSights() {
-        $userSights = $this->sights->getSightsForUser($this->user->getId());
+    public function presentAcceptedFriends() {
+        $friends = $this->friends->getAcceptedFriendsForUserId($this->user->getIdUser());
 
-        if(count($userSights) === 0) {
-            return;
+        $html = '';
+
+        if(count($friends) === 0) {
+            $html = "<p>None</p>";
         }
 
-        $html =<<<HTML
-HTML;
-
-        foreach($userSights as $sight) {
-            $id = $sight->getId();
-            $name = $sight->getName();
+        foreach($friends as $friend) {
+            $user = $this->users->get($friend['idUser2']);
+            $id = $user->getIdUser();
+            $name = $user->getFullName();
             $html .=<<<HTML
-<p><a href="sight.php?i=$id">$name</a></p>
+<p><a href="profile.php?i=$id">$name</a></p>
 HTML;
         }
 
         return <<<HTML
 <div class="options">
-<h2>SIGHTS</h2>
+<h2>Friends</h2>
 $html
 </div>
 HTML;
     }
 
     /**
-     * @return HTML for all of the sights
+     * @return HTML for all the users friends
      */
-    public function presentSightings() {
+    public function presentPendingFriends() {
+        $friends = $this->friends->getPendingFriendsForUserId($this->user->getIdUser());
 
+        $html = '';
+
+        if(count($friends) === 0) {
+            $html = "<p>None</p>";
+        }
+
+        foreach($friends as $friend) {
+            $user = $this->users->get($friend['idUser2']);
+            $id = $user->getIdUser();
+            $name = $user->getFullName();
+            $html .=<<<HTML
+<p><a href="profile.php?i=$id">$name</a></p>
+HTML;
+        }
+
+        return <<<HTML
+<div class="options">
+<h2>Pending Friends</h2>
+$html
+</div>
+HTML;
     }
 
+    private $users;
+    private $friends;
     private $sights;
     private $user;
 }

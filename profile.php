@@ -1,17 +1,15 @@
 <?php
 require 'lib/site.inc.php';
 
-//$view = new UserView($site, $user, $_REQUEST);
+$view = new ProfileView($site, $user, $_REQUEST);
 
-$idUser = $user->getIdUser();
+$editMode = false;
+if(isset($_POST['edit'])) {
+    $editMode = true;
+}
+
 $fullName = $user->getFullName();
-$emailAddress = $user->getEmailAddress();
-$birthYear = $user->getBirthYear();
-$hometownCity = $user->getHometownCity();
-$hometownState = $user->getHometownState();
 $privacy = $user->getPrivacy();
-
-$title = "<title>$fullName</title>";
 
 
 ?>
@@ -21,7 +19,7 @@ $title = "<title>$fullName</title>";
 <head lang="en">
     <meta charset="UTF-8">
     <link href="mystyle.css" rel="stylesheet" type="text/css">
-    <?php echo $title; ?>
+    <?php echo "<title>$fullName</title>"; ?>
 </head>
 <body>
     <?php
@@ -30,20 +28,20 @@ $title = "<title>$fullName</title>";
 
     <div class="main">
         <div class="left">
-            <div class="friends">
-                <h1>Friends</h1>
-            </div>
+            <?php
+                echo $view->presentPendingFriends();
+                echo $view->presentAcceptedFriends();
+            ?>
         </div>
 
         <div class="right">
-            <div class="profile">
-                <?php
-                echo "<h1>$fullName - ( $idUser )</h1>";
-                echo "<h2>Email: $emailAddress";
-                echo "<h3>Born in $birthYear</h3>";
-                echo "<h3>From $hometownCity, $hometownState</h3>";
-                ?>
-            </div>
+            <?php
+                if($editMode) {
+                    echo $view->presentEditableAbout();
+                } else {
+                    echo $view->presentAbout($user->getIdUser());
+                }
+            ?>
         </div>
     </div>
 

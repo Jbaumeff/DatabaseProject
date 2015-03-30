@@ -17,5 +17,14 @@ $view = new UserView($site, $user, $_REQUEST);
         echo Format::displayNavigationBar();
     ?>
 
+    <div class="main">
+        <div class="left">
+            <?php
+                echo $view->presentPendingFriends();
+                echo $view->presentAcceptedFriends();
+            ?>
+        </div>
+    </div>
+
 </body>
 </html>
