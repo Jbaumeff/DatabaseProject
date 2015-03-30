@@ -157,7 +157,7 @@ HTML;
         }
 
         foreach($friends as $friend) {
-            $user = $this->users->get($friend['idUser2']);
+            $user = $this->users->get($friend['idUser1']);
             $id = $user->getIdUser();
             $name = $user->getFullName();
             $html .=<<<HTML
@@ -176,9 +176,12 @@ HTML;
     /**
      * @return HTML for all the users friends
      */
-    public function presentPendingFriends() {
-        $friends = $this->friends->getPendingFriendsForUserId($this->user->getIdUser());
+    public function presentPendingFriends($userid) {
+        if($userid != $this->user->getIdUser()) {
+            return;
+        }
 
+        $friends = $this->friends->getPendingFriendsForUserId($this->user->getIdUser());
         $html = '';
 
         if(count($friends) === 0) {
@@ -186,11 +189,11 @@ HTML;
         }
 
         foreach($friends as $friend) {
-            $user = $this->users->get($friend['idUser2']);
+            $user = $this->users->get($friend['idUser1']);
             $id = $user->getIdUser();
             $name = $user->getFullName();
             $html .=<<<HTML
-<p><a href="profile.php?i=$id">$name</a></p>
+<p><a href="accept-request.php?sender=$id&accepter=$userid">$name</a></p>
 HTML;
         }
 

@@ -30,12 +30,10 @@ if(isset($_POST['search'])  && $_POST['search'] !== '') {
 <div class="main">
 	<!-- Left side items -->
 	<div class="left">
-		<div class="options">
-		<h2>FRIENDS</h2>
-		<p><a href="#">Anton Phibes</a></p>
-		<p><a href="#">Jennifer</a></p>
-		</div>
-
+		<?php
+		echo $view->presentPendingFriends($user->getIdUser());
+		echo $view->presentAcceptedFriends();
+		?>
 	</div>
 
 	<!-- Right side items -->

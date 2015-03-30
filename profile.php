@@ -29,7 +29,7 @@ $privacy = $user->getPrivacy();
     <div class="main">
         <div class="left">
             <?php
-                echo $view->presentPendingFriends();
+                echo $view->presentPendingFriends($user->getIdUser());
                 echo $view->presentAcceptedFriends();
             ?>
         </div>

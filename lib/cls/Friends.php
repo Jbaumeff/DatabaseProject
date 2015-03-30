@@ -56,10 +56,10 @@ SQL;
     public function getPendingFriendsForUserId($id) {
         $sql =<<<SQL
 SELECT * FROM $this->tableName
-WHERE (idUser1=? OR idUser2=?) AND confirmed=?
+WHERE idUser2=? AND confirmed=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
-        $statement->execute(array($id, $id, 0));
+        $statement->execute(array($id, 0));
         return $statement->fetchAll();
     }
 
@@ -79,5 +79,15 @@ VALUES (?,?,?)
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($idUser1, $idUser2, 0));
+    }
+
+    public function acceptRequest($idUser1, $idUser2) {
+            $sql =<<<SQL
+UPDATE $this->tableName
+SET confirmed=?
+where idUser1=? AND idUser2=?
+SQL;
+            $statement = $this->pdo()->prepare($sql);
+            $statement->execute(array(1,$idUser1, $idUser2));
     }
 }
