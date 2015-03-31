@@ -70,6 +70,7 @@ WHERE idUser1=? AND idUser2=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($idUser1, $idUser2));
+        $statement->execute(array($idUser2, $idUser1));
     }
 
     public function createFriendRequest($idUser1, $idUser2)  {

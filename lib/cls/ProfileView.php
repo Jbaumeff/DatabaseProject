@@ -90,14 +90,14 @@ HTML;
         $edit = '';
         if($this->user->getIdUser() === $userid) {
             $edit = "- <form method=\"post\" action=\"profile.php\"><input type=\"submit\" id=\"edit\" name=\"edit\" value=\"Edit\"></form></a>";
-        } else if(count($this->friends->get($userid, $this->user->getIdUser())) == 0){
+        } else if(count($this->friends->get($userid, $this->user->getIdUser())) == 0 && count($this->friends->get($this->user->getIdUser(), $userid)) == 0){
             $requestee = $this->user->getIdUser();
             $edit = "- <form method=\"post\" action=\"post/friend-request-post.php\"><input type=\"submit\" id=\"send\" name=\"send\" value=\"Send Friend Request\"><input type=\"hidden\" id=\"requester\" name=\"requester\" value=\"$userid\"><input type=\"hidden\" id=\"requestee\" name=\"requestee\" value=\"$requestee\"></form></a>";
-        } else if($this->friends->getRequestStatus($userid, $this->user->getIdUser())) {
+        } else if($this->friends->getRequestStatus($userid, $this->user->getIdUser()) || $this->friends->getRequestStatus($this->user->getIdUser(), $userid)) {
             $requestee = $this->user->getIdUser();
             $edit = "- <form method=\"post\" action=\"post/friend-request-post.php\"><input type=\"submit\" id=\"send\" name=\"send\" value=\"Remove Friend\"><input type=\"hidden\" id=\"deleter\" name=\"deleter\" value=\"$userid\"><input type=\"hidden\" id=\"deletee\" name=\"deletee\" value=\"$requestee\"></form></a>";
         } else {
-            $edit = "- Friend Request Sent";
+            $edit = "- Friend Request Pending";
         }
 
         return <<<HTML
@@ -147,9 +147,8 @@ HTML;
     /**
      * @return HTML for all the users friends
      */
-    public function presentAcceptedFriends() {
+    public function presentAcceptedFriends($userid) {
         $friends = $this->friends->getAcceptedFriendsForUserId($this->user->getIdUser());
-
         $html = '';
 
         if(count($friends) === 0) {
@@ -158,16 +157,27 @@ HTML;
 
         foreach($friends as $friend) {
             $user = $this->users->get($friend['idUser1']);
+
+            if($userid == $user->getIdUser()) {
+                $user = $this->users->get($friend['idUser2']);
+            }
+
             $id = $user->getIdUser();
             $name = $user->getFullName();
             $html .=<<<HTML
 <p><a href="profile.php?i=$id">$name</a></p>
 HTML;
         }
-
+        $title = '';
+        if($userid == $this->user->getIdUser()) {
+            $title = "Friends";
+        } else {
+            $name = $this->user->getFullName();
+            $title = "$name's Friends";
+        }
         return <<<HTML
 <div class="options">
-<h2>Friends</h2>
+<h2>$title</h2>
 $html
 </div>
 HTML;

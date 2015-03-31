@@ -32,7 +32,7 @@ if(isset($_POST['search'])  && $_POST['search'] !== '') {
 	<div class="left">
 		<?php
 		echo $view->presentPendingFriends($user->getIdUser());
-		echo $view->presentAcceptedFriends();
+		echo $view->presentAcceptedFriends($user->getIdUser());
 		?>
 	</div>
 

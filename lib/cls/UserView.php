@@ -48,12 +48,12 @@ class UserView {
         return '';
     }
 
+
     /**
      * @return HTML for all the users friends
      */
-    public function presentAcceptedFriends() {
+    public function presentAcceptedFriends($userid) {
         $friends = $this->friends->getAcceptedFriendsForUserId($this->user->getIdUser());
-
         $html = '';
 
         if(count($friends) === 0) {
@@ -62,16 +62,27 @@ class UserView {
 
         foreach($friends as $friend) {
             $user = $this->users->get($friend['idUser1']);
+
+            if($userid == $user->getIdUser()) {
+                $user = $this->users->get($friend['idUser2']);
+            }
+
             $id = $user->getIdUser();
             $name = $user->getFullName();
             $html .=<<<HTML
 <p><a href="profile.php?i=$id">$name</a></p>
 HTML;
         }
-
+        $title = '';
+        if($userid == $this->user->getIdUser()) {
+            $title = "Friends";
+        } else {
+            $name = $this->user->getFullName();
+            $title = "$name's Friends";
+        }
         return <<<HTML
 <div class="options">
-<h2>Friends</h2>
+<h2>$title</h2>
 $html
 </div>
 HTML;
