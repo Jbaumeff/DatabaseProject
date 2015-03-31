@@ -18,6 +18,13 @@ if(isset($_POST['requestee']) && isset($_POST['requester'])) {
     $friends->deleteFriendRequest($_POST['deleter'], $_POST['deletee']);
     $requestee = $_POST['deletee'];
     header("location: ../profile.php?i=$requestee");
+} else if(isset($_POST['sender']) && isset($_POST['accepter'])) {
+    $friends->acceptRequest($_POST['sender'], $_POST['accepter']);
+   // $accepter = $_POST['accepter'];
+    header("location: ../index.php");
+} else if(isset($_POST['senderd']) && isset($_POST['accepterd'])) {
+    $friends->deleteFriendRequest($_POST['sender'], $_POST['accepter']);
+    header("location: ../index.php");
 } else {
     header("location: ../profile.php");
 }

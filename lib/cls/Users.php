@@ -81,6 +81,99 @@ SQL;
 
         return new User($statement->fetch(PDO::FETCH_ASSOC));
     }
+
+
+
+
+
+
+
+
+
+
+    /********************************* Update Info ************************************************/
+
+    // Update user fullname
+    public function updateUserFullName($id, $newName) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET fullName=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($newName, $id));
+    }
+
+    // Update user Id
+    public function updateUserId($id, $newId) {
+        $user = $this->get($id);
+        if(!is_null($user)) {
+            return false;
+        }
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET idUser=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($newId, $id));
+        return true;
+    }
+
+    // Update email
+    public function updateUserEmail($id, $newEmail) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET emailAddress=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($newEmail, $id));
+    }
+
+    // Update birthYear
+    public function updateUserBirthYear($id, $new) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET birthYear=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($new, $id));
+    }
+
+    // Update hometownCity
+    public function updateUserCity($id, $new) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET hometownCity=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($new, $id));
+    }
+
+    // Update hometownState
+    public function updateUserState($id, $new) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET hometownState=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($new, $id));
+    }
+
+    // Update birthYear
+    public function updateUserPrivacy($id, $new) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET privacy=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($new, $id));
+    }
 }
 
 ?>

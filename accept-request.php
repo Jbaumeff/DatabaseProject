@@ -29,7 +29,7 @@ if(isset($_GET['sender']) && isset($_GET['accepter'])) {
 	<!-- Left side items -->
 	<div class="left">
 		<?php
-			echo $view->presentPendingFriends();
+			echo $view->presentPendingFriends($user->getIdUser());
 			echo $view->presentAcceptedFriends();
 		?>
 	</div>

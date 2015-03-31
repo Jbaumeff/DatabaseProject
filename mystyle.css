@@ -29,6 +29,10 @@ header div a {
     text-decoration: none;
 }
 
+header div form {
+    display: inline;
+}
+
 header div a:visited, header div a:link {
     color: darkslategrey;
 }
@@ -125,6 +129,7 @@ div.newUserForm form input.buttonForm {
     margin-top: 3.5em;
     width:100%;			/* width of whole page */
     overflow:hidden;		/* This chops off any overhanging divs */
+    font-family: "Arial", serif;
 }
 
 .left,
@@ -153,6 +158,69 @@ div.newUserForm form input.buttonForm {
     margin: 0.5em;
 }
 
+.options {
+    background: mintcream;
+    margin: 0.5em;
+    border: thin solid grey;
+    font-family: "Arial", Arial, sans-serif;
+}
+
+.options p {
+    padding: 0;
+    margin: 0;
+    border-top: thin solid grey;
+    background: mintcream;
+    padding: 0.1em 0.25em;
+}
+
+.options a:link, .options a:visited {
+    color: lightseagreen;
+}
+
+.options a:hover {
+    color: lightgreen;
+}
+.options h2 {
+    margin: 0;
+    padding: 0;
+    background: lightseagreen;
+    color: mintcream;
+    font-size: 1em;
+    padding: 0.2em 0.25em 0.1em 0.25em;
+    font-weight: normal;
+}
+
+.profile h1 {
+    font-size: 2.5em;
+    font-weight: normal;
+}
+
+.profile p {
+    font-size: 1.25em;
+    line-height: 1.5em;
+}
+.profile form {
+    display: inline;
+}
+
 
 /******************/
 /* Profile */
+
+.sighting {
+    font-family: "Arial", Arial, sans-serif;
+    width:96%;
+    padding:0.5em;
+    color: white;
+    background: lightseagreen;
+    margin: 0.5em auto 0.5em auto;
+    border-radius: 0.3em;
+    border: 1pt solid grey;
+}
+
+.sighting a:link, .sighting a:visited {
+    color: mintcream;
+}
+.sighting a:hover {
+    color: gold;
+}
