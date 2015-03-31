@@ -32,7 +32,7 @@ if(isset($_POST['userName']) && isset($_POST['password']) && isset($_POST['fullN
         exit;
     }
 
-//    //Dob is a 4-digit int
+    //Dob is a 4-digit int
     if(!is_int($dob) && !(strlen((string)$dob)==4)){
         header("location: ../newuser.php?error=3");
         exit;
@@ -47,12 +47,14 @@ if(isset($_POST['userName']) && isset($_POST['password']) && isset($_POST['fullN
     $user = $users->addUser($_POST['userName'], $_POST['fullName'], $_POST['email'], $_POST['dob'], $_POST['city'], $_POST['state'], $_POST['password'], $_POST['privacy']);
     if($user !== null) {
         $_SESSION['user'] = $user;
+
+        //Add a user's interests
+        $users->insertInterests($user->getIdUser(), $_POST['interests']);
+
         header("location: ../index.php");
         exit;
     }
 
-    //ADD FUNCTION TO FIX
-    //$user->insertInterests($_POST['interests']);
 }else{
     header("location: ../newuser.php?error=0");
     exit;

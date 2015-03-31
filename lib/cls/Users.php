@@ -83,6 +83,27 @@ SQL;
     }
 
 
+    //Maybe move to an Interest class at some point
+    /**
+     * Add the interests for a user
+     * @param id The user's id
+     * @param $interests The user's interests
+     * @returns User object if successful, null otherwise.
+     */
+    public function insertInterests($id, $interests){
+        $interest = explode(',', $interests);
+
+        foreach($interest as $like){
+            $sql =<<<SQL
+INSERT INTO Interests (Interest, idUser)
+VALUE(?,?)
+SQL;
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
+
+            $statement->execute(array($like, $id));
+        }
+}
 
 
 

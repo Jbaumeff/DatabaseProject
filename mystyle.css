@@ -108,6 +108,10 @@ div.newUserForm form p {
     margin-bottom: .5em;
 }
 
+.privacySelect{
+    text-align: center;
+}
+
 div.newUserForm form input {
     font-size: .75em;
     width: 180px;

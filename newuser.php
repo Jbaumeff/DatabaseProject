@@ -18,8 +18,15 @@ require 'lib/site.inc.php';
             <p>Email Address *<input type="text" name="email" id="email"></p>
             <p>Birth Year *<input type="text" name="dob" id="dob"></p>
             <p>City and State *<input type="text" name="city" id="city"> <input type="text" name="state" id="state"></p>
-            <p>Interests *<input type="text" name="interests"></p>
-            <p>Privacy Setting *<input type="text" name="privacy" id="privacy"></p>
+            <p>Interests (separate by commas) *<input type="text" name="interests" id="interests"></p>
+            <p class="privacySelect">Privacy Setting *
+            <select name="privacy" id="privacy">
+                <option value="">Select...</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select></p>
+
             <p><input class="buttonForm" type="submit"></p>
         </form>
     </div>
