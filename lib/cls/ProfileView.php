@@ -158,9 +158,16 @@ HTML;
         foreach($friends as $friend) {
             $user = $this->users->get($friend['idUser1']);
 
-            if($userid == $user->getIdUser()) {
-                $user = $this->users->get($friend['idUser2']);
+            if($userid == $this->user->getIdUser()) {
+                if($userid == $user->getIdUser()) {
+                    $user = $this->users->get($friend['idUser2']);
+                }
+            } else {
+                if($user->getIdUser() != $userid) {
+                    $user = $this->users->get($friend['idUser2']);
+                }
             }
+
 
             $id = $user->getIdUser();
             $name = $user->getFullName();
