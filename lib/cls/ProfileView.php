@@ -87,6 +87,7 @@ HTML;
         $birthYear = $this->user->getBirthYear();
         $hometownCity = $this->user->getHometownCity();
         $hometownState = $this->user->getHometownState();
+        $interests = $this->users->getInterests($this->user->getIdUser());
         $edit = '';
         if($this->user->getIdUser() === $userid) {
             $edit = "- <form method=\"post\" action=\"profile.php\"><input type=\"submit\" id=\"edit\" name=\"edit\" value=\"Edit\"></form></a>";
@@ -108,6 +109,7 @@ HTML;
     <p>Email: $emailAddress</p>
     <p>Born in $birthYear</p>
     <p>From $hometownCity, $hometownState</p>
+    <p>Interests: $interests</p>
 </div>
 HTML;
     }
@@ -123,6 +125,7 @@ HTML;
         $hometownCity = $this->user->getHometownCity();
         $hometownState = $this->user->getHometownState();
         $privacy = $this->user->getPrivacy();
+        $interests = $this->users->getInterests($this->user->getIdUser());
         return <<<HTML
 <div class="profile">
     <h1>About</h1>
@@ -140,6 +143,8 @@ HTML;
     <form method="post" action="post/edit-about-post.php"><input type="submit" id="low" name="low" value="Low"></form>
     <form method="post" action="post/edit-about-post.php"><input type="submit" id="medium" name="medium" value="Medium"></form>
     <form method="post" action="post/edit-about-post.php"><input type="submit" id="high" name="high" value="High"></form>
+    <p>Interests</p>
+    <form method="post" action="post/edit-about-post.php"><input type="text" id="interests" name="interests" value="$interests"><input type="submit" id="save" name="save" value="Save"></form>
 </div>
 HTML;
     }

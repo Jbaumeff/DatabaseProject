@@ -37,10 +37,16 @@ if(isset($_POST['fullName'])) {
     } else if(isset($_POST['high'])) {
         $users->updateUserPrivacy($user->getIdUser(), $_POST['high']);
     }
+} else if(isset($_POST['interests'])) {
+    $users->updateUserInterests($user->getIdUser(), $_POST['interests']);
+    //$user->setInterests($_POST['interests']);
 }
 
 // Refresh the session user
 $_SESSION['user'] = $users->get($user->getIdUser());
+//if(isset($_POST['interests'])){
+//    $_SESSION
+//}
 header("location: ../profile.php");
 
 ?>

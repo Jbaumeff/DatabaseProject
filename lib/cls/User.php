@@ -15,6 +15,7 @@ class User {
     private $hometownCity;    ///< When we joined the site
     private $hometownState;
     private $privacy;
+    private $interests;
 
     /**
      * Constructor
@@ -86,6 +87,13 @@ class User {
         return $this->privacy;
     }
 
+//    public function getInterests(){
+//        return $this->interests;
+//    }
+//
+//    public function setInterests($interests){
+//        $this->interests = $interests;
+//    }
 
 }
 

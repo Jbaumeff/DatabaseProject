@@ -83,6 +83,8 @@ SQL;
     }
 
 
+
+    /********************************* Interests Add/Delete ************************************************/
     //Maybe move to an Interest class at some point
     /**
      * Add the interests for a user
@@ -105,12 +107,48 @@ SQL;
         }
 }
 
+    /**
+     * Delete the interests for a user
+     * @param id The user's id
+     * @returns User object if successful, null otherwise.
+     */
+    public function deleteInterests($id){
+            $sql =<<<SQL
+DELETE FROM Interests
+WHERE idUser=?
+SQL;
+            $pdo = $this->pdo();
+            $statement = $pdo->prepare($sql);
 
+            $statement->execute(array($id));
+    }
 
+    public function getInterests($id){
+        $interests = "";
+        $sql =<<<SQL
+SELECT * FROM Interests
+WHERE idUser=?
+SQL;
+        $pdo = $this->pdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(array($id));
 
+        if($statement->rowCount() === 0){
+            return "";
+        }
 
+        $rows = $statement->fetchAll();
 
+        foreach($rows as $row){
+//            if($row['Interest'] == ""){
+//                return $interests;
+//            }
+            $interests .= $row['Interest'] . ", ";
+        }
+        $likes = substr($interests, 0, count($interests)-3);
 
+        return $likes;
+    }
 
     /********************************* Update Info ************************************************/
 
@@ -194,6 +232,12 @@ where idUser=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($new, $id));
+    }
+
+    // Update Interests
+    public function updateUserInterests($id, $interests) {
+        $this->deleteInterests($id);
+        $this->insertInterests($id, $interests);
     }
 }
 
