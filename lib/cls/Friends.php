@@ -91,4 +91,29 @@ SQL;
             $statement = $this->pdo()->prepare($sql);
             $statement->execute(array(1,$idUser1, $idUser2));
     }
+
+    public function getFriend($idUser1, $idUser2){
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idUser1=? AND idUser2=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($idUser1, $idUser2));
+        $rows = $statement->fetchAll();
+        if($statement->rowCount() == 0){
+            $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idUser1=? AND idUser2=?
+SQL;
+            $statement = $this->pdo()->prepare($sql);
+            $statement->execute(array($idUser2, $idUser1));
+            $rows = $statement->fetchAll();
+        }
+        foreach($rows as $row){
+            if(($row['idUser1'] == $idUser1 and $row['idUser2'] == $idUser2 and $row['confirmed'] == 1) or ($row['idUser2'] == $idUser1 and $row['idUser1'] == $idUser2 and $row['confirmed'] == 1)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -16,6 +16,7 @@ class ProfileView {
         $this->users = new Users($site);
         $this->sights = new Sights($site);
         $this->friends = new Friends($site);
+        $this->collaborators = new Collaborators($site);
 
 
         if(isset($request['i']) && !is_null($this->users->get($request['i']))) {
@@ -81,27 +82,46 @@ HTML;
      * @return HTML for about info
      */
     public function presentAbout($userid) {
-        $fullName = $this->user->getFullName();
-        $idUser = $this->user->getIdUser();
-        $emailAddress = $this->user->getEmailAddress();
-        $birthYear = $this->user->getBirthYear();
-        $hometownCity = $this->user->getHometownCity();
-        $hometownState = $this->user->getHometownState();
-        $interests = $this->users->getInterests($this->user->getIdUser());
+
+        $show = false;
+
+        if($this->user->getIdUser() === $userid){
+            $show = true;
+        }elseif($this->user->getPrivacy() == "Low"){
+            $show = true;
+        }elseif($this->user->getPrivacy() == "Medium"){
+            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
+            if($show == false){
+                $show = $this->collaborators->getCollaborators($this->user->getIdUser(), $userid);
+            }
+        }elseif($this->user->getPrivacy() == "High"){
+            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
+        }
+
+
         $edit = '';
-        if($this->user->getIdUser() === $userid) {
+        if ($this->user->getIdUser() === $userid) {
             $edit = "- <form method=\"post\" action=\"profile.php\"><input type=\"submit\" id=\"edit\" name=\"edit\" value=\"Edit\"></form></a>";
-        } else if(count($this->friends->get($userid, $this->user->getIdUser())) == 0 && count($this->friends->get($this->user->getIdUser(), $userid)) == 0){
+        } else if (count($this->friends->get($userid, $this->user->getIdUser())) == 0 && count($this->friends->get($this->user->getIdUser(), $userid)) == 0) {
             $requestee = $this->user->getIdUser();
             $edit = "- <form method=\"post\" action=\"post/friend-request-post.php\"><input type=\"submit\" id=\"send\" name=\"send\" value=\"Send Friend Request\"><input type=\"hidden\" id=\"requester\" name=\"requester\" value=\"$userid\"><input type=\"hidden\" id=\"requestee\" name=\"requestee\" value=\"$requestee\"></form></a>";
-        } else if($this->friends->getRequestStatus($userid, $this->user->getIdUser()) || $this->friends->getRequestStatus($this->user->getIdUser(), $userid)) {
+        } else if ($this->friends->getRequestStatus($userid, $this->user->getIdUser()) || $this->friends->getRequestStatus($this->user->getIdUser(), $userid)) {
             $requestee = $this->user->getIdUser();
             $edit = "- <form method=\"post\" action=\"post/friend-request-post.php\"><input type=\"submit\" id=\"send\" name=\"send\" value=\"Remove Friend\"><input type=\"hidden\" id=\"deleter\" name=\"deleter\" value=\"$userid\"><input type=\"hidden\" id=\"deletee\" name=\"deletee\" value=\"$requestee\"></form></a>";
         } else {
             $edit = "- Friend Request Pending";
         }
 
-        return <<<HTML
+        if($show) {
+            $fullName = $this->user->getFullName();
+            $idUser = $this->user->getIdUser();
+            $emailAddress = $this->user->getEmailAddress();
+            $birthYear = $this->user->getBirthYear();
+            $hometownCity = $this->user->getHometownCity();
+            $hometownState = $this->user->getHometownState();
+            $interests = $this->users->getInterests($this->user->getIdUser());
+
+            return <<<HTML
 <div class="profile">
     <h1>About $edit</h1>
     <p>$fullName</p>
@@ -112,6 +132,17 @@ HTML;
     <p>Interests: $interests</p>
 </div>
 HTML;
+        }else{
+            $idUser = $this->user->getIdUser();
+            $id2 = $userid;
+            return <<<HTML
+<div class="profile">
+    <h1>About $edit</h1>
+    <p>$idUser</p>
+    <p>This Profile is Private</p>
+</div>
+HTML;
+        }
     }
 
     /**
@@ -155,47 +186,74 @@ HTML;
     /**
      * @return HTML for all the users friends
      */
-    public function presentAcceptedFriends($userid) {
-        $friends = $this->friends->getAcceptedFriendsForUserId($this->user->getIdUser());
-        $html = '';
+    public function presentAcceptedFriends($userid)
+    {
 
-        if(count($friends) === 0) {
-            $html = "<p>None</p>";
+        $show = false;
+
+        if ($this->user->getIdUser() === $userid) {
+            $show = true;
+        } elseif ($this->user->getPrivacy() == "Low") {
+            $show = true;
+        } elseif ($this->user->getPrivacy() == "Medium") {
+            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
+            if($show == false){
+                $show = $this->collaborators->getCollaborators($this->user->getIdUser(), $userid);
+            }
+        } elseif ($this->user->getPrivacy() == "High") {
+            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
         }
 
-        foreach($friends as $friend) {
-            $user = $this->users->get($friend['idUser1']);
+        if ($show) {
 
-            if($userid == $this->user->getIdUser()) {
-                if($userid == $user->getIdUser()) {
-                    $user = $this->users->get($friend['idUser2']);
-                }
-            } else {
-                if($user->getIdUser() != $userid) {
-                    $user = $this->users->get($friend['idUser2']);
-                }
+            $friends = $this->friends->getAcceptedFriendsForUserId($this->user->getIdUser());
+            $html = '';
+
+            if (count($friends) === 0) {
+                $html = "<p>None</p>";
             }
 
+            foreach ($friends as $friend) {
+                $user = $this->users->get($friend['idUser1']);
 
-            $id = $user->getIdUser();
-            $name = $user->getFullName();
-            $html .=<<<HTML
+                if ($userid == $this->user->getIdUser()) {
+                    if ($userid == $user->getIdUser()) {
+                        $user = $this->users->get($friend['idUser2']);
+                    }
+                } else {
+                    if ($user->getIdUser() != $userid) {
+                        $user = $this->users->get($friend['idUser2']);
+                    }
+                }
+
+
+                $id = $user->getIdUser();
+                $name = $user->getFullName();
+                $html .= <<<HTML
 <p><a href="profile.php?i=$id">$name</a></p>
 HTML;
-        }
-        $title = '';
-        if($userid == $this->user->getIdUser()) {
-            $title = "Friends";
-        } else {
-            $name = $this->user->getFullName();
-            $title = "$name's Friends";
-        }
-        return <<<HTML
+            }
+            $title = '';
+            if ($userid == $this->user->getIdUser()) {
+                $title = "Friends";
+            } else {
+                $name = $this->user->getFullName();
+                $title = "$name's Friends";
+            }
+            return <<<HTML
 <div class="options">
 <h2>$title</h2>
 $html
 </div>
 HTML;
+        }else{
+            return <<<HTML
+<div class="options">
+<h2>Friends</h2>
+<p>Hidden</p>
+</div>
+HTML;
+        }
     }
 
     /**
@@ -234,4 +292,5 @@ HTML;
     private $sights;
     private $friends;
     private $user;
+    private $collaborators;
 }

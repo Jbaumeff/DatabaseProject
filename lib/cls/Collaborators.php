@@ -24,4 +24,20 @@ SQL;
         $statement->execute(array($userid, true));
         return $statement->fetchAll();
     }
+
+    public function getCollaborators($userid1, $userid2){
+        $sql =<<<SQL
+SELECT * FROM $this->tableName A, $this->tableName B
+WHERE A.idUser = ? AND B.idUser=? AND A.idUser <> B.idUser  AND A.confirmed =1 and B.confirmed = 1 and A.idProject = B.idProject
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($userid1, $userid2));
+        $rows = $statement->fetchAll();
+
+        if($statement->rowCount() > 0){
+            return true;
+        }
+
+        return false;
+    }
 }
