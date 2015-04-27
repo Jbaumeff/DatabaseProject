@@ -239,6 +239,17 @@ SQL;
         $this->deleteInterests($id);
         $this->insertInterests($id, $interests);
     }
+
+    // Update Password
+    public function updatePassword($id, $new) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET pword=?
+where idUser=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($new, $id));
+    }
 }
 
 ?>

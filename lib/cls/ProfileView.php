@@ -145,6 +145,9 @@ HTML;
     <form method="post" action="post/edit-about-post.php"><input type="submit" id="high" name="high" value="High"></form>
     <p>Interests</p>
     <form method="post" action="post/edit-about-post.php"><input type="text" id="interests" name="interests" value="$interests"><input type="submit" id="save" name="save" value="Save"></form>
+    <p>Password</p>
+    <form method="post" action="post/edit-about-post.php"><input type="password" id="password" name="password"><input type="submit" id="save" name="save" value="Save"></form>
+
 </div>
 HTML;
     }

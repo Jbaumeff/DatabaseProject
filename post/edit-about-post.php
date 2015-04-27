@@ -40,6 +40,8 @@ if(isset($_POST['fullName'])) {
 } else if(isset($_POST['interests'])) {
     $users->updateUserInterests($user->getIdUser(), $_POST['interests']);
     //$user->setInterests($_POST['interests']);
+} else if(isset($_POST['password'])) {
+    $users->updatePassword($user->getIdUser(), $_POST['password']);
 }
 
 // Refresh the session user
