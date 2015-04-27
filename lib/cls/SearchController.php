@@ -20,15 +20,22 @@ class SearchController {
     }
 
     public function getSearchResults($searchFor) {
-//        $sql =<<<SQL
-//SELECT id, name, created AS date, '2' AS ID
-//FROM $this->sightsTable
-//WHERE name LIKE ?
-//UNION
         $sql =<<<SQL
 SELECT iduser, fullname, '1' AS ID
 FROM $this->usersTable
-WHERE fullname LIKE ?
+WHERE iduser LIKE ?
+SQL;
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(array("%$searchFor%"));
+        return $stmt->fetchAll();
+    }
+
+    public function getInterestResults($searchFor) {
+        $sql =<<<SQL
+SELECT DISTINCT iduser
+FROM Interests
+WHERE Interest LIKE ?
 SQL;
 
         $stmt = $this->pdo->prepare($sql);

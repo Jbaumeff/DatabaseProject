@@ -4,13 +4,21 @@ require 'lib/site.inc.php';
 $view = new UserView($site, $user, $_REQUEST);
 
 $searchDisplay = '';
-if(isset($_POST['search'])  && $_POST['search'] !== '') {
+if(isset($_POST['search'])  && $_POST['search'] !== '' && isset($_POST['name'])) {
 	$searchController = new SearchController($site);
 	$searchResults = $searchController->getSearchResults($_POST['search']);
 	$searchView = new SearchView();
 	$searchDisplay = $searchView->presentSearchResults($searchResults);
+} else if(isset($_POST['search'])  && $_POST['search'] !== '' && isset($_POST['interest'])) {
+    $searchController = new SearchController($site);
+    $searchResults = $searchController->getInterestResults($_POST['search']);
+    $searchView = new SearchView();
+    $searchDisplay = $searchView->presentSearchResults($searchResults);
 } else {
-	header("location: index.php");
+    $searchController = new SearchController($site);
+    $searchResults = $searchController->getSearchResults($_POST['search']);
+    $searchView = new SearchView();
+    $searchDisplay = $searchView->presentSearchResults($searchResults);
 }
 ?>
 
