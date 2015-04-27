@@ -228,3 +228,7 @@ div.newUserForm form input.buttonForm {
 .sighting a:hover {
     color: gold;
 }
+
+#error {
+    color: red;
+}

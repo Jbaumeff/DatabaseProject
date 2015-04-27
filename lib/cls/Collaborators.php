@@ -32,12 +32,20 @@ WHERE A.idUser = ? AND B.idUser=? AND A.idUser <> B.idUser  AND A.confirmed =1 a
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($userid1, $userid2));
-        $rows = $statement->fetchAll();
 
         if($statement->rowCount() > 0){
             return true;
         }
 
         return false;
+    }
+
+    public function insertNewCollaborator($userId, $projectId, $confirmed = 0) {
+        $sql =<<<SQL
+INSERT INTO $this->tableName (idUser, idProject, confirmed)
+VALUES (?,?,?)
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($userId, $projectId, $confirmed));
     }
 }

@@ -4,6 +4,11 @@ require 'lib/site.inc.php';
 $view = new ProjectView($site, $user, $_REQUEST);
 
 $fullName = $user->getFullName();
+$error = '';
+if(isset($_REQUEST['error'])) {
+    $error = $_REQUEST['error'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +26,7 @@ echo Format::displayNavigationBar();
 <div class="main">
     <div class="left">
         <?php
-            echo $view->displayCreateNewProject($user->getIdUser());
+            echo $view->displayCreateNewProject($user->getIdUser(), $error);
         ?>
     </div>
 

@@ -44,12 +44,12 @@ class ProjectView {
     /**
      * @return HTML for all the users friends
      */
-    public function displayCreateNewProject($userid)
-    {
+    public function displayCreateNewProject($userid, $error) {
         return <<<HTML
 <div class="options">
 <h2>Create a new project</h2>
 <form action="post/create-project-post.php?$userid" method="POST">
+<p id="error">$error</p><br>
 <label for="name">Project Name</label>
 <input type="text" id="name" name="name">
 <input type="submit" value="Create">
@@ -76,7 +76,7 @@ HTML;
             $project = $this->projects->getProjectById($projectId);
             $title = $project[0]['title'];
             $html .=<<<HTML
-<h2><a href="project.php?i=$projectId">$title</a></h2>
+<h2><a href="project.php?id=$projectId">$title</a></h2>
 HTML;
             $html .= "</div>";
         }

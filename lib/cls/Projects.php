@@ -25,6 +25,16 @@ SQL;
         return $statement->fetchAll();
     }
 
+    public function getProjectByName($projectName) {
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE title=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectName));
+        return $statement->fetchAll()[0];
+    }
+
     public function doesProjectExist($projectName) {
         $sql =<<<SQL
 SELECT * FROM $this->tableName
@@ -43,4 +53,6 @@ SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($projectName, $creator));
     }
+
+
 }
