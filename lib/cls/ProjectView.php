@@ -75,8 +75,16 @@ HTML;
             $projectId = $collab['idProject'];
             $project = $this->projects->getProjectById($projectId);
             $title = $project[0]['title'];
+
+            $role = "Collabarator: ";
+            if($project[0]['creator'] == $userId) {
+                $role = "Owner: ";
+            }
+            $created = $project[0]['created'];
+
             $html .=<<<HTML
-<h2><a href="project.php?id=$projectId">$title</a></h2>
+<h2>$role<a href="project.php?id=$projectId">$title</a></h2>
+<p class="time">Last Modified - $created</p>
 HTML;
             $html .= "</div>";
         }
