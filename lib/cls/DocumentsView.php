@@ -26,11 +26,11 @@ class DocumentsView {
         $this->title = $row[0]['title'];
         $this->id = strval($request['id']);
 
-//        if(isset($request['id']) && !is_null($this->users->get($request['id']))) {
-//            $this->user = $this->users->get($request['id']);
-//        } else {
-//            $this->user = $user;
-//        }
+        if(isset($request['id']) && !is_null($this->users->get($request['id']))) {
+            $this->user = $this->users->get($request['id']);
+        } else {
+            $this->user = $user;
+        }
     }
 
     /**
@@ -165,9 +165,18 @@ HTML;
             $html .= "<div class=\"sighting\">";
             $documentName = $document['documentName'];
             $versionNumber = $document['versionNumber'];
+            $form = $this->presentDeleteForm($versionNumber, $projectId, $documentName);
+            $docCreator = $this->documents->getOwnerOfDocument($projectId, $documentName, $versionNumber);
+            if(is_null($docCreator)) {
+                $docCreator = '';
+            }
+
             $html .=<<<HTML
 <h2>$documentName</h2>
-<p class="time"><ol><li><a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a></li>
+<p class="time"><ol>
+<li>
+    <a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a>&nbsp; Creator: $docCreator $form
+</li>
 HTML;
             $html = $this->displayChildren($versionNumber, $documentName, $html);
             $html .= "</ol></p></div>";
@@ -187,14 +196,37 @@ HTML;
         foreach($documents as $document) {
             $documentName = $document['documentName'];
             $versionNumber = $document['versionNumber'];
+            $form = $this->presentDeleteForm($versionNumber, $projectId, $documentName);
+            $docCreator = $this->documents->getOwnerOfDocument($projectId, $documentName, $versionNumber);
+            if(is_null($docCreator)) {
+                $docCreator = '';
+            }
+
             $html .=<<<HTML
-<li><a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a></li>
+<li><a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a>&nbsp; Creator: $docCreator $form</li>
 HTML;
             $html = $this->displayChildren($versionNumber, $documentName, $html);
         }
 
         $html .= "</ol>";
         return $html;
+    }
+
+    private function presentDeleteForm($versionNumber, $projectId, $documentName) {
+        $form = '';
+        $id = $this->id;
+        if($this->documents->isUserOwnerOfDocument($this->user->getIdUser(), $versionNumber, $projectId, $documentName)) {
+            $form =<<<HTML
+<form class="doc-delete" action="post/delete-document-post.php" method="POST">
+<input type="hidden" id="id" name="id" value="$id">
+<input type="hidden" id="version" name="version" value="$versionNumber">
+<input type="hidden" id="projectId" name="projectId" value="$projectId">
+<input type="hidden" id="documentName" name="documentName" value="$documentName">
+<input type="submit" name="delete" value="Delete">
+</form>
+HTML;
+        }
+        return $form;
     }
 
     private $projects;

@@ -76,14 +76,17 @@ SQL;
         return count($statement->fetchAll()) > 0;
     }
 
-//    public function insertProject($projectName, $creator) {
-//        $sql =<<<SQL
-//INSERT INTO $this->tableName (title, creator)
-//VALUES (?,?)
-//SQL;
-//        $statement = $this->pdo()->prepare($sql);
-//        $statement->execute(array($projectName, $creator));
-//    }
+    public function getOwnerOfDocument($projectId, $documentName, $versionNumber) {
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idProject=? AND versionNumber=? AND documentName=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId, $versionNumber, $documentName));
+        $rows = $statement->fetchAll();
+        return $rows[0]['creator'];
+    }
+
 
     public function saveDocument($parentVersion, $projectId, $docName, $user, $content){
         $sql =<<<SQL

@@ -259,6 +259,10 @@ ol {
     list-style-type: none;
 }
 
+.doc-delete {
+    display: inline;
+}
+
 #error {
     color: red;
 }
