@@ -10,7 +10,29 @@ require 'lib/site.inc.php';
     <link rel="stylesheet" type="text/css" href="mystyle.css" media="screen" />
 </head>
 <body>
+
+<?php
+if(isset($_REQUEST['error'])){
+    $error = $_REQUEST['error'];
+    $message = '';
+
+    if($error == 0){
+        $message = "<p id=\"error\" class=\"center\">Missing information.</p>";
+    }elseif($error == 1){
+        $message =  "<p id=\"error\" class=\"center\">User already exist.</p>";
+    }elseif($error == 2){
+        $message =  "<p id=\"error\" class=\"center\">Email must contains an @.</p>";
+    }elseif($error == 3){
+        $message =  "<p id=\"error\" class=\"center\">Birth year is invalid.</p>";
+    }elseif($error == 4){
+        $message =  "<p id=\"error\" class=\"center\">The password must be 8 characters or longer.</p>";
+    }
+
+}
+?>
+    <?php echo $message; ?>
     <div class="newUserForm">
+
         <form method="post" action="./post/new-post.php">
             <p>User Name *<input type="text" name="userName" id="userName"></p>
             <p>Password *<input type="password" name="password" id="password"></p>

@@ -86,6 +86,13 @@ div.loginForm form input.buttonForm {
 
 /*************/
 /* New User Page */
+.center{
+    text-align: center;
+    font-size: 5em;
+    color: red;
+}
+
+
 div.newUserForm {
     position: absolute;
     top: 50%;

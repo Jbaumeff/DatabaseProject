@@ -90,7 +90,7 @@ HTML;
         }elseif($this->user->getPrivacy() == "Low"){
             $show = true;
         }elseif($this->user->getPrivacy() == "Medium"){
-            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
+            //$show = $this->friends->getFriend($this->user->getIdUser(), $userid);
             if($show == false){
                 $show = $this->collaborators->getCollaborators($this->user->getIdUser(), $userid);
             }
@@ -134,11 +134,12 @@ HTML;
 HTML;
         }else{
             $idUser = $this->user->getIdUser();
-            $id2 = $userid;
+            $interests = $this->users->getInterests($this->user->getIdUser());
             return <<<HTML
 <div class="profile">
     <h1>About $edit</h1>
     <p>$idUser</p>
+    <p>Interests: $interests</p>
     <p>This Profile is Private</p>
 </div>
 HTML;
@@ -196,7 +197,7 @@ HTML;
         } elseif ($this->user->getPrivacy() == "Low") {
             $show = true;
         } elseif ($this->user->getPrivacy() == "Medium") {
-            $show = $this->friends->getFriend($this->user->getIdUser(), $userid);
+            //$show = $this->friends->getFriend($this->user->getIdUser(), $userid);
             if($show == false){
                 $show = $this->collaborators->getCollaborators($this->user->getIdUser(), $userid);
             }

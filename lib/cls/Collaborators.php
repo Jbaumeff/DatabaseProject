@@ -40,6 +40,21 @@ SQL;
         return false;
     }
 
+    public function getAllCollaborators($id){
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE confirmed=1 AND idProject=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($id));
+
+        if($statement->rowCount() > 0){
+            return $statement->fetchAll();
+        }
+
+        return null;
+    }
+
     public function insertNewCollaborator($userId, $projectId, $confirmed = 0) {
         $sql =<<<SQL
 INSERT INTO $this->tableName (idUser, idProject, confirmed)
@@ -48,4 +63,34 @@ SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($userId, $projectId, $confirmed));
     }
+
+
+    public function deleteFriendRequest($idUser1, $idUser2) {
+        $sql =<<<SQL
+DELETE FROM $this->tableName
+WHERE idUser1=? AND idUser2=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($idUser1, $idUser2));
+        $statement->execute(array($idUser2, $idUser1));
+    }
+
+    public function createRequest($idUser, $id)  {
+        $sql =<<<SQL
+INSERT INTO $this->tableName (idUser, idProject, confirmed)
+VALUES (?,?,?)
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($idUser, $id, 0));
+    }
+
+//    public function acceptRequest($idUser1, $id) {
+//        $sql =<<<SQL
+//UPDATE $this->tableName
+//SET confirmed=?
+//where idUser1=? AND idUser2=?
+//SQL;
+//        $statement = $this->pdo()->prepare($sql);
+//        $statement->execute(array(1,$idUser1, $idUser2));
+//    }
 }
