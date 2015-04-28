@@ -18,10 +18,16 @@ class DocumentView {
         $this->collaborators = new Collaborators($site);
         $this->projects = new Projects($site);
 
+        $documents = new Documents($site);
+
         $this->user = $user;
         $this->docName = $request['documentName'];
         $this->projectId =$request['projectId'];
         $this->version = $request['version'];
+
+        $document = $documents->getDocumentContent($this->version,$this->projectId,$this->docName);
+
+        $this->content= $document['fileContent'];
     }
 
     /**
@@ -35,6 +41,11 @@ class DocumentView {
     public function getDocName()
     {
         return $this->docName;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
     }
 
     public function getProjectId()
@@ -176,4 +187,5 @@ HTML;
     private $projectId;
     private $docName;
     private $version;
+    private $content;
 }

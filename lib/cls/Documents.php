@@ -85,5 +85,44 @@ SQL;
 //        $statement->execute(array($projectName, $creator));
 //    }
 
+    public function saveDocument($parentVersion, $projectId, $docName, $user, $content){
+        $sql =<<<SQL
+SELECT MAX(versionNumber) FROM $this->tableName
+WHERE idProject=? and documentName=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId,$docName));
 
+        $nextVersion = 1;
+        $pProjectId = null;
+        $pDocName = null;
+        $pParentVersion = null;
+
+
+        if($statement->rowCount() > 0){
+            $num = $statement->fetchAll()[0]['versionNumber'];
+            $nextVersion = $num + 1;
+            $pProjectId = $projectId;
+            $pDocName = $docName;
+            $pParentVersion = $parentVersion;
+        }
+
+        $sql =<<<SQL
+INSERT INTO $this->tableName (idProject,documentName, versionNumber, fileContent,creator, parentIdProject,parentDocumentName, parentVersionNumber)
+VALUES(?,?,?,?,?,?,?,?)
+WHERE idProject=? and documentName=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId,$docName, $nextVersion, $content, $user, $pProjectId,$pDocName, $pParentVersion));
+    }
+
+    public function getDocumentContent($version, $projectId, $docName){
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idProject=? and documentName=? and versionNumber=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId,$docName, $version));
+        return $statement->fetchAll()[0];
+    }
 }

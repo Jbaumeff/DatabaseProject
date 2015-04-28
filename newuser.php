@@ -19,9 +19,9 @@ if(isset($_REQUEST['error'])){
     if($error == 0){
         $message = "<p id=\"error\" class=\"center\">Missing information.</p>";
     }elseif($error == 1){
-        $message =  "<p id=\"error\" class=\"center\">User already exist.</p>";
+        $message =  "<p id=\"error\" class=\"center\">User already exists.</p>";
     }elseif($error == 2){
-        $message =  "<p id=\"error\" class=\"center\">Email must contains an @.</p>";
+        $message =  "<p id=\"error\" class=\"center\">Email must contain an @ sign.</p>";
     }elseif($error == 3){
         $message =  "<p id=\"error\" class=\"center\">Birth year is invalid.</p>";
     }elseif($error == 4){

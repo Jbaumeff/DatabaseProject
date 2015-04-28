@@ -15,7 +15,7 @@ if(isset($_POST['userName']) && isset($_POST['password']) && isset($_POST['fullN
 
     //User doesnt already exist
     if($users->get($_POST['userName'])){
-        header("location: ./new-post.php?error=1");
+        header("location: ../newuser.php?error=1");
         exit;
     }
 
@@ -28,7 +28,7 @@ if(isset($_POST['userName']) && isset($_POST['password']) && isset($_POST['fullN
     $pos = strpos($email, "@");
     if($pos === false)
     {
-        header("location: ./new-post.php?error=2");
+        header("location: ../newuser.php?error=2");
         exit;
     }
 
@@ -40,7 +40,7 @@ if(isset($_POST['userName']) && isset($_POST['password']) && isset($_POST['fullN
 
     //Password is 8 character or longer
     if(strlen($password)<8){
-        header("location: ./new-post.php?error=4");
+        header("location: ../newuser.php?error=4");
         exit;
     }
 

@@ -6,35 +6,30 @@
  * Time: 6:45 PM
  */
 
-//$login = true;
-//require '../lib/site.inc.php';
-//
-//$error = '';
-//$projectId = '';
-//if(isset($_POST['name'])) {
-//    $documentName = $_POST['name'];
-//    $projectId = $_POST['projectId'];
-//
-//    if($documentName == '') {
-//        $error = "Document name was empty";
-//        header("location: ../project.php?error=$error&id=$projectId");
-//        exit;
-//    }
-//
-//    $documents = new Documents($site);
-//    if($documents->doesProjectExist($projectName, $projectId)) {
-//        $error = "Document name already exists";
-//        header("location: ../project.php?error=$error&id=$projectId");
-//        exit;
-//    }
+require '../lib/site.inc.php';
 
-//    $userId = $user->getIdUser();
-//    $projects->insertProject($projectName, $userId);
-//    $project = $projects->getProjectByName($projectName);
-//
-//    $collabs = new Collaborators($site);
-//
-//    $collabs->insertNewCollaborator($userId, $project['idProject'], 1);
+$documents = new Documents($site);
 
-//}
-header("location: ../project.php?id=$projectId");
+$id = '';
+
+$name = $user->getIdUser();
+if(isset($_POST['id'])){
+    $id = $_POST['id'];
+}
+
+echo $_POST['doc'];
+echo $_POST['save'];
+echo $_POST['docName'];
+echo $_POST['version'];
+echo $_POST['id'];
+
+
+
+if(isset($_POST['save']) && isset($_POST['doc']) && isset($_POST['version']) && isset($_POST['docName']) ){
+    $documents->saveDocument($_POST['version'], $id, $_POST['docName'], $name, $_POST['doc']);
+    //header("location: ../project.php?id=$id");
+}elseif(isset($_POST['discard'])){
+    //header("location: ../project.php?id=$id");
+}
+
+//header("location: ../project.php?id=$id");

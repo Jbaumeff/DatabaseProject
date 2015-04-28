@@ -6,6 +6,8 @@ $view = new DocumentView($site, $user, $_REQUEST);
 $title = $view->getDocName();
 $version = $view->getVersion();
 $id = $view->getProjectId();
+$content = $view->getContent();
+
 $userName = $user->getIdUser();
 
 $error = '';
@@ -42,13 +44,17 @@ echo Format::displayNavigationBar();
         <form method="post" action="./post/document-post.php">
             <p><label for name="document">Document<?php echo $title; ?></label></p>
             <p>&nbsp;</p>
-            <p><input type="submit" value="Save Document" name="save" id="save">
-            <input type="submit" value="Discard Changes" name="discard" id="discard"></p>
+            <p>
+                <input type="submit" value="Save Document" name="save" id="save">
+                <input type="hidden" id="id" name="id" value=<?php echo $id; ?>>
+                <input type="hidden" id="version" name="version" value=<?php echo $version; ?>>
+                <input type="hidden" id="docName" name="docName" value=<?php echo $title; ?>>
+                <input type="submit" value="Discard Changes" name="discard" id="discard">
+            </p>
             <p>&nbsp;</p>
-            <p><textarea rows="75" cols="78" name="document">
+            <p><textarea rows="40" cols="78" name="doc" id="doc">
+                    <?php echo $content; ?>
             </textarea></p>
-
-
         </form>
         <?php
 //            echo "<h1>$title</h1>";
