@@ -27,14 +27,5 @@ if(isset($_POST['name'])) {
         header("location: ../project.php?error=$error&id=$projectId");
         exit;
     }
-
-//    $userId = $user->getIdUser();
-//    $projects->insertProject($projectName, $userId);
-//    $project = $projects->getProjectByName($projectName);
-//
-//    $collabs = new Collaborators($site);
-//
-//    $collabs->insertNewCollaborator($userId, $project['idProject'], 1);
-
 }
-header("location: ../project.php?id=$projectId");
+header("location: ../document.php?documentName=$documentName&projectId=$projectId&version=1");
