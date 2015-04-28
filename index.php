@@ -23,6 +23,7 @@ $userName = $user->getFullName();
             <?php
                 echo $view->presentPendingFriends($user->getIdUser());
                 echo $view->presentAcceptedFriends($user->getIdUser());
+                echo $view->presentPendingCollabs($user->getIdUser());
             ?>
         </div>
     </div>

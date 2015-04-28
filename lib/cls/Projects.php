@@ -46,12 +46,21 @@ SQL;
     }
 
     public function insertProject($projectName, $creator) {
-        $sql =<<<SQL
+    $sql =<<<SQL
 INSERT INTO $this->tableName (title, creator)
 VALUES (?,?)
 SQL;
+    $statement = $this->pdo()->prepare($sql);
+    $statement->execute(array($projectName, $creator));
+}
+
+    public function deleteProjectById($projectId, $creator) {
+        $sql =<<<SQL
+DELETE FROM $this->tableName
+WHERE idProject=? AND creator=?
+SQL;
         $statement = $this->pdo()->prepare($sql);
-        $statement->execute(array($projectName, $creator));
+        $statement->execute(array($projectId, $creator));
     }
 
 
