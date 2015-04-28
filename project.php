@@ -34,13 +34,13 @@ echo Format::displayNavigationBar();
         echo $view->displayCreateNewDocument($user->getIdUser(), $error);
 
         //Display collaborators here
-        echo $view->displayCollaborators($_REQUEST['id']);
+        echo $view->displayCollaborators($id);
 
         //Display denied collaborators here
         //if($creator == $user->getIdUser()) {
             echo $view->displayDeniedCollaborators($_REQUEST['id']);
         //}
-        echo $view->displayCollaborators($id);
+
         ?>
     </div>
 
