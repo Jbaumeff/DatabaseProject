@@ -30,6 +30,11 @@ echo Format::displayNavigationBar();
 
         //Display collaborators here
         echo $view->displayCollaborators($_REQUEST['id']);
+
+        //Display denied collaborators here
+        //if($creator == $user->getIdUser()) {
+            echo $view->displayDeniedCollaborators($_REQUEST['id']);
+        //}
         ?>
     </div>
 

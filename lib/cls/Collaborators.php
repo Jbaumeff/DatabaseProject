@@ -25,6 +25,7 @@ SQL;
         return $statement->fetchAll();
     }
 
+    //List of projects you collaborate on with a given user
     public function getCollaborators($userid1, $userid2){
         $sql =<<<SQL
 SELECT * FROM $this->tableName A, $this->tableName B
@@ -40,10 +41,27 @@ SQL;
         return false;
     }
 
+    //All collaborators that collaborate on a given project
     public function getAllCollaborators($id){
         $sql =<<<SQL
 SELECT * FROM $this->tableName
 WHERE confirmed=1 AND idProject=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($id));
+
+        if($statement->rowCount() > 0){
+            return $statement->fetchAll();
+        }
+
+        return null;
+    }
+
+    //All collaborators that collaborate on a given project
+    public function getDeniedCollaborators($id){
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE confirmed=2 AND idProject=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($id));
@@ -65,14 +83,13 @@ SQL;
     }
 
 
-    public function deleteFriendRequest($idUser1, $idUser2) {
+    public function deleteRequest($idUser, $id) {
         $sql =<<<SQL
 DELETE FROM $this->tableName
-WHERE idUser1=? AND idUser2=?
+WHERE idUser=? AND idProject=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
-        $statement->execute(array($idUser1, $idUser2));
-        $statement->execute(array($idUser2, $idUser1));
+        $statement->execute(array($idUser, $id));
     }
 
     public function createRequest($idUser, $id)  {
@@ -84,13 +101,33 @@ SQL;
         $statement->execute(array($idUser, $id, 0));
     }
 
-//    public function acceptRequest($idUser1, $id) {
-//        $sql =<<<SQL
-//UPDATE $this->tableName
-//SET confirmed=?
-//where idUser1=? AND idUser2=?
-//SQL;
-//        $statement = $this->pdo()->prepare($sql);
-//        $statement->execute(array(1,$idUser1, $idUser2));
-//    }
+    public function acceptRequest($idUser, $id) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET confirmed=?
+where idUser=? AND idProject=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array(1,$idUser, $id));
+    }
+
+    public function rejectRequest($idUser, $id) {
+        $sql =<<<SQL
+UPDATE $this->tableName
+SET confirmed=?
+where idUser=? AND idProject=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array(2,$idUser, $id));
+    }
+
+    public function getPendingCollabsForUserId($id) {
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idUser=? AND confirmed=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($id, 0));
+        return $statement->fetchAll();
+    }
 }

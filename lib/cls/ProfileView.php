@@ -17,7 +17,7 @@ class ProfileView {
         $this->sights = new Sights($site);
         $this->friends = new Friends($site);
         $this->collaborators = new Collaborators($site);
-
+        $this->projects = new Projects($site);
 
         if(isset($request['i']) && !is_null($this->users->get($request['i']))) {
             $this->user = $this->users->get($request['i']);
@@ -289,9 +289,45 @@ $html
 HTML;
     }
 
+    public function presentPendingCollabs($userid) {
+        if($userid != $this->user->getIdUser()) {
+            return;
+        }
+
+        $collabs = $this->collaborators->getPendingCollabsForUserId($this->user->getIdUser());//getPendingFriendsForUserId($this->user->getIdUser());
+        $html = '';
+
+        if(count($collabs) === 0) {
+            $html = "<p>None</p>";
+        }
+
+        foreach($collabs as $collab) {
+            $user = $this->users->get($collab['idUser']);
+            $id = $user->getIdUser();
+            $name = $user->getFullName();
+            $pid = $collab['idProject'];
+            $project = $this->projects->getProjectById($pid);
+            $title = $project[0]['title'];
+
+
+            $html .=<<<HTML
+<p><a href="accept-collab-request.php?sender=$pid&accepter=$userid">$title</a></p>
+HTML;
+        }
+
+        return <<<HTML
+<div class="options">
+<h2>Pending Collaborations</h2>
+$html
+</div>
+HTML;
+    }
+
+
     private $users;
     private $sights;
     private $friends;
     private $user;
     private $collaborators;
+    private $projects;
 }

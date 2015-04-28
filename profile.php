@@ -31,6 +31,7 @@ $privacy = $user->getPrivacy();
             <?php
                 echo $view->presentPendingFriends($user->getIdUser());
                 echo $view->presentAcceptedFriends($user->getIdUser());
+                echo $view->presentPendingCollabs($user->getIdUser());
             ?>
         </div>
 

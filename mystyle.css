@@ -18,7 +18,10 @@ header div {
     position: fixed;
     height: 3em;
     width: 100%;
+    opacity: 100;
     text-align: center;
+    z-index: 100;
+
 }
 
 header div a {

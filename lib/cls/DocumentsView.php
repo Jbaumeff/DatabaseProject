@@ -96,12 +96,41 @@ HTML;
         return $html;
     }
 
+    public function displayDeniedCollaborators($id) {
+        $collabs = $this->collaborators->getDeniedCollaborators($id);
+
+        $html = '';
+        $html .= "<h2>Declined Collaborators</h2>";
+        if($collabs == null){
+            $html .= "<div class=\"sighting\">";
+            $html .=<<<HTML
+<h2>None</h2>
+HTML;
+            $html .= "</div>";
+            return $html;
+        }
+
+
+
+
+        foreach($collabs as $collab) {
+            $html .= "<div class=\"sighting\">";
+            $name = $collab['idUser'];
+            $html .=<<<HTML
+<h2><a href="./post/collaborator-remove-post.php?id=$id&name=$name">$name</a></h2>
+HTML;
+            $html .= "</div>";
+        }
+
+        return $html;
+    }
+
     public function displayAddCollaborators($creator, $id) {
         $html = '';
             $html .=<<<HTML
 <p>&nbsp;</p>
 <h3>Add A Collaborator</h3>
-<form action="post/add-collaborator-post.php?id=$id" method="POST">
+<form action="post/collaborator-request-post.php?id=$id" method="POST">
 <label for="requestee">Name</label>
 <input type="text" id="requestee" name="requestee">
 <input type="hidden" id="requester" name="requester" value="$id">
