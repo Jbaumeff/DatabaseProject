@@ -37,6 +37,25 @@ SQL;
         return $statement->fetchAll();
     }
 
+    public function isUserOwnerOfDocument($userid, $versionId, $projectId, $documentName) {
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idProject=? AND versionNumber=? AND documentName=? AND creator=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId, $versionId, $documentName, $userid));
+        return count($statement->fetchAll()) > 0;
+    }
+
+    public function deleteDocumentWithVersion($projectId, $documentName, $versionNumber) {
+        $sql =<<<SQL
+DELETE FROM $this->tableName
+WHERE idProject=? AND versionNumber=? AND documentName=?
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId, $versionNumber, $documentName));
+    }
+
 //    public function getProjectByName($projectName) {
 //        $sql =<<<SQL
 //SELECT * FROM $this->tableName
