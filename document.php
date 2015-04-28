@@ -42,7 +42,7 @@ echo Format::displayNavigationBar();
 
     <div class="right document">
         <form method="post" action="./post/document-post.php">
-            <p><label for name="document">Document<?php echo $title; ?></label></p>
+            <p><label for name="document"><?php echo $title; ?></label></p>
             <p>&nbsp;</p>
             <p>
                 <input type="submit" value="Save Document" name="save" id="save">

@@ -17,14 +17,6 @@ if(isset($_POST['id'])){
     $id = $_POST['id'];
 }
 
-echo $_POST['doc'];
-echo $_POST['save'];
-echo $_POST['docName'];
-echo $_POST['version'];
-echo $_POST['id'];
-
-
-
 if(isset($_POST['save']) && isset($_POST['doc']) && isset($_POST['version']) && isset($_POST['docName']) ){
     $documents->saveDocument($_POST['version'], $id, $_POST['docName'], $name, $_POST['doc']);
     //header("location: ../project.php?id=$id");
@@ -32,4 +24,4 @@ if(isset($_POST['save']) && isset($_POST['doc']) && isset($_POST['version']) && 
     //header("location: ../project.php?id=$id");
 }
 
-//header("location: ../project.php?id=$id");
+header("location: ../project.php?id=$id");

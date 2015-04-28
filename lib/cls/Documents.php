@@ -100,20 +100,27 @@ SQL;
 
 
         if($statement->rowCount() > 0){
-            $num = $statement->fetchAll()[0]['versionNumber'];
-            $nextVersion = $num + 1;
+            $num = $statement->fetchAll();
+            $number = intval($num[0]['versionNumber']);
+            $nextVersion = $number + 1;
             $pProjectId = $projectId;
             $pDocName = $docName;
             $pParentVersion = $parentVersion;
-        }
 
-        $sql =<<<SQL
+            $sql =<<<SQL
 INSERT INTO $this->tableName (idProject,documentName, versionNumber, fileContent,creator, parentIdProject,parentDocumentName, parentVersionNumber)
 VALUES(?,?,?,?,?,?,?,?)
-WHERE idProject=? and documentName=?
 SQL;
-        $statement = $this->pdo()->prepare($sql);
-        $statement->execute(array($projectId,$docName, $nextVersion, $content, $user, $pProjectId,$pDocName, $pParentVersion));
+            $statement = $this->pdo()->prepare($sql);
+            $statement->execute(array($projectId,$docName, $nextVersion, $content, $user, $pProjectId,$pDocName, $pParentVersion));
+        }else{
+            $sql =<<<SQL
+INSERT INTO $this->tableName (idProject,documentName, versionNumber, fileContent,creator)
+VALUES(?,?,?,?,?)
+SQL;
+            $statement = $this->pdo()->prepare($sql);
+            $statement->execute(array($projectId, $docName, $nextVersion, $content, $user));
+        }
     }
 
     public function getDocumentContent($version, $projectId, $docName){
