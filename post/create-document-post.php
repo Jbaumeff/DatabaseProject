@@ -10,28 +10,31 @@ $login = true;
 require '../lib/site.inc.php';
 
 $error = '';
-
+$projectId = '';
 if(isset($_POST['name'])) {
-    $projectName = $_POST['name'];
-    if($projectName == '') {
+    $documentName = $_POST['name'];
+    $projectId = $_POST['projectId'];
+
+    if($documentName == '') {
         $error = "Document name was empty";
-        header("location: ../project.php?error=$error");
+        header("location: ../project.php?error=$error&id=$projectId");
         exit;
     }
 
-    $projects = new Projects($site);
-    if($projects->doesProjectExist($projectName)) {
-        $error = "Project name already exists";
-        header("location: ../projects.php?error=$error");
+    $documents = new Documents($site);
+    if($documents->doesProjectExist($projectName, $projectId)) {
+        $error = "Document name already exists";
+        header("location: ../project.php?error=$error&id=$projectId");
         exit;
     }
 
-    $userId = $user->getIdUser();
-    $projects->insertProject($projectName, $userId);
-    $project = $projects->getProjectByName($projectName);
-    $collabs = new Collaborators($site);
-    //echo "Userid: " . $userId . " Title: " . $project['title'];
-    $collabs->insertNewCollaborator($userId, $project['idProject'], 1);
+//    $userId = $user->getIdUser();
+//    $projects->insertProject($projectName, $userId);
+//    $project = $projects->getProjectByName($projectName);
+//
+//    $collabs = new Collaborators($site);
+//
+//    $collabs->insertNewCollaborator($userId, $project['idProject'], 1);
 
 }
-header("location: ../projects.php");
+header("location: ../project.php?id=$projectId");

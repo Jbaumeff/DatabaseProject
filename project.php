@@ -8,6 +8,11 @@ $creator = $view->getCreator();
 $title = $view->getTitle();
 $id = $view->getId();
 
+$error = '';
+if(isset($_REQUEST['error'])) {
+    $error = $_REQUEST['error'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +31,10 @@ echo Format::displayNavigationBar();
     <div class="left">
         <?php
         //Add a new document here
-        echo $view->displayCreateNewDocument($user->getIdUser());
+        echo $view->displayCreateNewDocument($user->getIdUser(), $error);
 
         //Display collaborators here
-        echo $view->displayCollaborators($_REQUEST['id']);
+        echo $view->displayCollaborators($id);
         ?>
     </div>
 
