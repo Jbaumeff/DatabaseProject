@@ -18,10 +18,22 @@ class Documents extends Table {
     public function getDocumentsWithProjectId($projectId) {
         $sql =<<<SQL
 SELECT * FROM $this->tableName
-WHERE idProject=?
+WHERE idProject=? AND parentVersionNumber is NULL
+ORDER BY documentName, versionNumber
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($projectId));
+        return $statement->fetchAll();
+    }
+
+    public function getDocumentsWithVersionAndProjectId($versionId, $projectId, $documentName) {
+        $sql =<<<SQL
+SELECT * FROM $this->tableName
+WHERE idProject=? AND parentVersionNumber=? AND parentDocumentName=?
+ORDER BY documentName, versionNumber
+SQL;
+        $statement = $this->pdo()->prepare($sql);
+        $statement->execute(array($projectId, $versionId, $documentName));
         return $statement->fetchAll();
     }
 

@@ -17,6 +17,7 @@ class DocumentsView {
         $this->friends = new Friends($site);
         $this->collaborators = new Collaborators($site);
         $this->projects = new Projects($site);
+        $this->documents = new Documents($site);
 
         $row = $this->projects->getProjectById(strval($request['id']));
         $this->creator = $row[0]['creator'];
@@ -150,25 +151,49 @@ HTML;
      * @return HTML for all the projects collaborators
      */
     public function displayDocuments() {
-        $userId = $this->user->getIdUser();
-        $collabs = $this->collaborators->getConfirmedDocumentsForUserid($userId);
+//        $userId = $this->user->getIdUser();
+        $projectId = $this->id;
+        $documents = $this->documents->getDocumentsWithProjectId($projectId);
+
         $html = '';
 
-        if(count($collabs) === 0) {
+        if(count($documents) === 0) {
             return "<div class=\"sighting\"><h2>No Projects</h2></div>";
         }
-//        return "<div class=\"sighting\"><h2>$userId</h2></div>";
-        foreach($collabs as $collab) {
+
+        foreach($documents as $document) {
             $html .= "<div class=\"sighting\">";
-            $projectId = $collab['idProject'];
-            $project = $this->projects->getProjectById($projectId);
-            $title = $project[0]['title'];
+            $documentName = $document['documentName'];
+            $versionNumber = $document['versionNumber'];
             $html .=<<<HTML
-<h2><a href="project.php?i=$projectId">$title</a></h2>
+<h2>$documentName</h2>
+<p class="time"><ol><li><a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a></li>
 HTML;
-            $html .= "</div>";
+            $html = $this->displayChildren($versionNumber, $documentName, $html);
+            $html .= "</ol></p></div>";
         }
 
+        return $html;
+    }
+
+    public function displayChildren($parentVersion, $parentName, $html) {
+        $projectId = $this->id;
+        $documents = $this->documents->getDocumentsWithVersionAndProjectId($parentVersion, $projectId, $parentName);
+        if(count($documents) == 0) {
+            return $html;
+        }
+
+        $html .= "<ol>";
+        foreach($documents as $document) {
+            $documentName = $document['documentName'];
+            $versionNumber = $document['versionNumber'];
+            $html .=<<<HTML
+<li><a href="document.php?documentName=$documentName&projectId=$projectId&version=$versionNumber">Version $versionNumber</a></li>
+HTML;
+            $html = $this->displayChildren($versionNumber, $documentName, $html);
+        }
+
+        $html .= "</ol>";
         return $html;
     }
 
@@ -177,6 +202,7 @@ HTML;
     private $users;
     private $friends;
     private $user;
+    private $documents;
 
     private $creator;
     private $title;

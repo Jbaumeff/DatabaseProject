@@ -58,7 +58,7 @@ echo Format::displayNavigationBar();
         if($creator == $user->getIdUser()) {
             echo $view->displayAddCollaborators($creator,$id);
         }
-            //echo $view->displayDocuments();
+            echo $view->displayDocuments();
         ?>
     </div>
 </div>
