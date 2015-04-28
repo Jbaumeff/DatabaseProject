@@ -235,8 +235,15 @@ div.newUserForm form input.buttonForm {
 .sighting a:link, .sighting a:visited {
     color: mintcream;
 }
+
 .sighting a:hover {
     color: gold;
+}
+
+p.time {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8em;
 }
 
 #error {

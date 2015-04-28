@@ -63,14 +63,17 @@ class DocumentsView {
     /**
      * @return HTML for all the users friends
      */
-    public function displayCreateNewDocument($userid)
+    public function displayCreateNewDocument($userid, $error)
     {
+        $id = $this->id;
         return <<<HTML
 <div class="options">
 <h2>Create a new document</h2>
 <form action="post/create-document-post.php?$userid" method="POST">
+<p id="error">$error</p>
 <label for="name">Document Name</label>
 <input type="text" id="name" name="name">
+<input type="hidden" id="projectId" name="projectId" value="$id">
 <input type="submit" value="Create">
 </form>
 </div>

@@ -69,14 +69,22 @@ HTML;
         if(count($collabs) === 0) {
             return "<div class=\"sighting\"><h2>No Projects</h2></div>";
         }
-//        return "<div class=\"sighting\"><h2>$userId</h2></div>";
+
         foreach($collabs as $collab) {
             $html .= "<div class=\"sighting\">";
             $projectId = $collab['idProject'];
             $project = $this->projects->getProjectById($projectId);
             $title = $project[0]['title'];
+
+            $role = "Collaborator: ";
+            if($project[0]['creator'] == $userId) {
+                $role = "Owner: ";
+            }
+            $created = $project[0]['created'];
+
             $html .=<<<HTML
-<h2><a href="project.php?id=$projectId">$title</a></h2>
+<h2>$role<a href="project.php?id=$projectId">$title</a></h2>
+<p class="time">Last Modified - $created</p>
 HTML;
             $html .= "</div>";
         }
