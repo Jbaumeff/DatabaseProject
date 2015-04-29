@@ -42,18 +42,17 @@ echo Format::displayNavigationBar();
 
     <div class="right document">
         <form method="post" action="./post/document-post.php">
-            <p><label for name="document"><?php echo $title; ?></label></p>
+            <p><?php echo $title; ?></p>
             <p>&nbsp;</p>
             <p>
                 <input type="submit" value="Save Document" name="save" id="save">
                 <input type="hidden" id="id" name="id" value=<?php echo $id; ?>>
                 <input type="hidden" id="version" name="version" value=<?php echo $version; ?>>
-                <input type="hidden" id="docName" name="docName" value=<?php echo $title; ?>>
+                <input type="hidden" id="docName" name="docName" value="<?php echo $title; ?>">
                 <input type="submit" value="Discard Changes" name="discard" id="discard">
             </p>
             <p>&nbsp;</p>
-            <p><textarea rows="40" cols="78" name="doc" id="doc">
-                    <?php echo $content; ?>
+            <p><textarea rows="40" cols="78" name="doc" id="doc"><?php echo $content; ?>
             </textarea></p>
         </form>
         <?php

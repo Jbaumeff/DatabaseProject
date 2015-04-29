@@ -90,7 +90,7 @@ SQL;
 
     public function saveDocument($parentVersion, $projectId, $docName, $user, $content){
         $sql =<<<SQL
-SELECT MAX(versionNumber) FROM $this->tableName
+SELECT MAX(versionNumber) AS ver FROM $this->tableName
 WHERE idProject=? and documentName=?
 SQL;
         $statement = $this->pdo()->prepare($sql);
@@ -101,10 +101,11 @@ SQL;
         $pDocName = null;
         $pParentVersion = null;
 
-
-        if($statement->rowCount() > 0){
-            $num = $statement->fetchAll();
-            $number = intval($num[0]['versionNumber']);
+        $num = $statement->fetchAll();
+        $number = intval($num[0]['ver']);
+        //echo $number;
+        if($number > 0){
+            $number = intval($num[0]['ver']);
             $nextVersion = $number + 1;
             $pProjectId = $projectId;
             $pDocName = $docName;
@@ -116,10 +117,11 @@ VALUES(?,?,?,?,?,?,?,?)
 SQL;
             $statement = $this->pdo()->prepare($sql);
             $statement->execute(array($projectId,$docName, $nextVersion, $content, $user, $pProjectId,$pDocName, $pParentVersion));
+            //echo "HERE";
         }else{
             $sql =<<<SQL
-INSERT INTO $this->tableName (idProject,documentName, versionNumber, fileContent,creator)
-VALUES(?,?,?,?,?)
+INSERT INTO $this->tableName (idProject,documentName, versionNumber, fileContent,creator,parentIdProject,parentDocumentName, parentVersionNumber)
+VALUES(?,?,?,?,?,NULL,NULL,NULL)
 SQL;
             $statement = $this->pdo()->prepare($sql);
             $statement->execute(array($projectId, $docName, $nextVersion, $content, $user));
