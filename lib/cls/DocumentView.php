@@ -17,6 +17,7 @@ class DocumentView {
         $this->friends = new Friends($site);
         $this->collaborators = new Collaborators($site);
         $this->projects = new Projects($site);
+        $this->comments = new Comments($site);
 
         $documents = new Documents($site);
 
@@ -177,6 +178,29 @@ $html
 HTML;
     }
 
+    public function addComment($document, $version, $projectId, $user){
+        //return $this->comments->addComment($document, $version, $projectId, $user);
+        $html = <<<HTML
+<div class="sighting">
+<h2> Add a Comment</h2>
+<form method="post" action="./post/comment-post.php">
+<input type="text" id="comment" name="comment">
+<input type="hidden" id="userid" name="userid" value="$user">
+<input type="hidden" id="projectid" name="projectid" value="$projectId">
+<input type="hidden" id="docName" name="docName" value="$document">
+<input type="hidden" id="version" name="version" value="$version">
+<input type="submit" name="submit" value="Submit">
+</form>
+</div>
+HTML;
+
+        return $html;
+    }
+
+    public function displayComments($document, $version, $projectId){
+        return $this->comments->displayComments($document, $version, $projectId);
+    }
+
 
     private $projects;
     private $collaborators;
@@ -188,4 +212,5 @@ HTML;
     private $docName;
     private $version;
     private $content;
+    private $comments;
 }

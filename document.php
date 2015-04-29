@@ -39,7 +39,6 @@ echo Format::displayNavigationBar();
         ?>
     </div>
 
-
     <div class="right document">
         <form method="post" action="./post/document-post.php">
             <p><?php echo $title; ?></p>
@@ -55,19 +54,12 @@ echo Format::displayNavigationBar();
             <p><textarea rows="40" cols="78" name="doc" id="doc"><?php echo $content; ?>
             </textarea></p>
         </form>
+
+
         <?php
-//            echo "<h1>$title</h1>";
-//        if($creator == $user->getIdUser()){
-//            echo "<p>Owner - $creator  </p>";
-//            echo "<p><a href=\"./post/delete-project-post.php?id=$id&creator=$creator\">Delete</a></p>";
-//        }else{
-//            echo "<p>Owner - $creator</p>";
-//            echo "<p><a href=\"./post/leave-project-post.php?id=$id&name=$userName\">Leave Project</a></p>";
-//        }
-//        if($creator == $user->getIdUser()) {
-//            echo $view->displayAddCollaborators($creator,$id);
-//        }
-            //echo $view->displayDocuments();
+        echo $view->addComment($title,$version,$id, $user->getIdUser());
+
+        //echo $view->displayComments($title,$version,$id);
         ?>
     </div>
 </div>

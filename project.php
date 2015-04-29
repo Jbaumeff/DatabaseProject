@@ -55,10 +55,12 @@ echo Format::displayNavigationBar();
             echo "<p>Owner - $creator</p>";
             echo "<p><a href=\"./post/leave-project-post.php?id=$id&name=$userName\">Leave Project</a></p>";
         }
+
         if($creator == $user->getIdUser()) {
             echo $view->displayAddCollaborators($creator,$id);
         }
-            echo $view->displayDocuments();
+
+        echo $view->displayDocuments();
         ?>
     </div>
 </div>

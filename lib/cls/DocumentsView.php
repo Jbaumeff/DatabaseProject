@@ -132,6 +132,7 @@ HTML;
     public function displayAddCollaborators($creator, $id) {
         $html = '';
             $html .=<<<HTML
+
 <p>&nbsp;</p>
 <h3>Add A Collaborator</h3>
 <form action="post/collaborator-request-post.php?id=$id" method="POST">
@@ -141,9 +142,6 @@ HTML;
 <input type="submit" value="Invite To Project">
 </form>
 HTML;
-        $html .= "</div>";
-
-
         return $html;
     }
 
