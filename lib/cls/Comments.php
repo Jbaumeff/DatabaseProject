@@ -28,7 +28,7 @@ SQL;
         $sql =<<<SQL
 SELECT * FROM $this->tableName
 WHERE idProject=? AND versionNumber=? and documentName=?
-ORDER BY timestamp
+ORDER BY timestamp DESC
 SQL;
         $statement = $this->pdo()->prepare($sql);
         $statement->execute(array($projectId, $version,$document));

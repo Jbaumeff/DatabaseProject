@@ -12,13 +12,12 @@ body {
 
 /* Navigation Bar */
 header div {
-    background-color: rgba(107,202,226,0.4);
+    background-color: rgba(107,202,226,0.95);
     margin-right: 0px;
     margin-left: 0px;
     position: fixed;
     height: 3em;
     width: 100%;
-    opacity: 100;
     text-align: center;
     z-index: 100;
 
