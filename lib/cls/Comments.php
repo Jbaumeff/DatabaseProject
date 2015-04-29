@@ -17,11 +17,11 @@ class Comments extends Table {
 
     public function addComment($document, $version, $projectId, $user, $text){
         $sql =<<<SQL
-INSERT INTO $this->tableName ()
+INSERT INTO $this->tableName (idUser, versionNumber, idProject, documentName, text)
 VALUES(?,?,?,?,?)
 SQL;
         $statement = $this->pdo()->prepare($sql);
-        $statement->execute(array($projectId, $version,$document));
+        $statement->execute(array($user, $version, $projectId, $document, $text));
     }
 
     public function getComments($document, $version, $projectId){
