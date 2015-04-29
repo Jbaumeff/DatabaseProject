@@ -22,7 +22,7 @@ if(isset($_POST['name'])) {
     }
 
     $documents = new Documents($site);
-    if($documents->doesProjectExist($projectName, $projectId)) {
+    if($documents->doesDocumentExist($documentName, $projectId)) {
         $error = "Document name already exists";
         header("location: ../project.php?error=$error&id=$projectId");
         exit;
