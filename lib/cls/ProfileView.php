@@ -124,8 +124,8 @@ HTML;
             return <<<HTML
 <div class="profile">
     <h1>About $edit</h1>
-    <p>$fullName</p>
-    <p>$idUser</p>
+    <p>Name: $fullName</p>
+    <p>Username: $idUser</p>
     <p>Email: $emailAddress</p>
     <p>Born in $birthYear</p>
     <p>From $hometownCity, $hometownState</p>

@@ -181,7 +181,7 @@ HTML;
     public function addComment($document, $version, $projectId, $user){
         //return $this->comments->addComment($document, $version, $projectId, $user);
         $html = <<<HTML
-<div class="sighting">
+<div class="sighting" style="text-align: center;">
 <h2> Add a Comment</h2>
 <form method="post" action="./post/comment-post.php">
 <input type="text" id="comment" name="comment">
@@ -197,8 +197,31 @@ HTML;
         return $html;
     }
 
-    public function displayComments($document, $version, $projectId){
-        return $this->comments->displayComments($document, $version, $projectId);
+    public function displayComments(){
+        $projectId = $this->projectId;
+        $comments = $this->comments->getComments($this->docName, $this->version, $projectId);
+
+        $html = '';
+        if(count($comments) == 0) {
+            return <<<HTML
+<div class="sighting"><h2>No Comments</h2></div>
+HTML;
+        }
+
+        foreach($comments as $comment) {
+            $html .= "<div class=\"sighting\">";
+            $creator = $comment['idUser'];
+            $content = $comment['text'];
+            $timestamp = $comment['timestamp'];
+
+            $html .=<<<HTML
+<h2><a href="profile.php?i=$creator">$creator</a> - $timestamp</h2>
+<p class="time">$content</p>
+</div>
+HTML;
+        }
+
+        return $html;
     }
 
 

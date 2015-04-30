@@ -156,7 +156,7 @@ HTML;
         $html = '';
 
         if(count($documents) === 0) {
-            return "<div class=\"sighting\"><h2>No Projects</h2></div>";
+            return "<div class=\"sighting\"><h2>No Documents</h2></div>";
         }
 
         foreach($documents as $document) {

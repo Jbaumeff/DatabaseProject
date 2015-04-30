@@ -58,8 +58,7 @@ echo Format::displayNavigationBar();
 
         <?php
         echo $view->addComment($title,$version,$id, $user->getIdUser());
-
-        //echo $view->displayComments($title,$version,$id);
+        echo $view->displayComments();
         ?>
     </div>
 </div>
