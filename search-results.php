@@ -44,6 +44,15 @@ if(isset($_POST['search'])  && $_POST['search'] !== '' && isset($_POST['name']))
 		?>
 	</div>
 
+	<div class="right document" style="margin-bottom: 1em;">
+		<?php
+			if(isset($_POST['interest'])) {
+				echo "<h2>Searched by interests</h2>";
+			} else {
+				echo "<h2>Searched by name</h2>";
+			}
+		?>
+	</div>
 	<!-- Right side items -->
 	<div class="right">
 		<?php
