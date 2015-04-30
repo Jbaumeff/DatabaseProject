@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="webdev-dbp" filePermissions="420" folderPermissions="493">
+  <component name="PublishConfigData" promptOnLocalOverwrite="false" filePermissions="420" folderPermissions="493">
     <serverData>
-      <paths name="webdev-dbp">
+      <paths name="dbProject">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
